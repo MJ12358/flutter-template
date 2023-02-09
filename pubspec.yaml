@@ -1,5 +1,5 @@
-name: flutter_template_bloc
-description: A Flutter skeleton using the Bloc state management solution.
+name: flutter_template
+description: A Flutter skeleton using Clean Architecture, the Bloc state management solution and Sembast.
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
@@ -10,14 +10,19 @@ environment:
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
+  dart_extensionz: ^2.0.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
+  flutter_extensionz: ^1.0.3
   flutter_localizations:
     sdk: flutter
+  flutter_themez: ^1.0.4
   get_it: ^7.2.0
   intl: ^0.17.0
+  path_provider: ^2.0.12
+  sembast: ^3.4.0+6
 
 dev_dependencies:
   bloc_test: ^9.1.1
@@ -33,7 +38,7 @@ dev_dependencies:
   mocktail: ^0.3.0
 
 flutter_app_name:
-  name: "flutter_template_bloc"
+  name: "flutter_template"
 
 flutter:
   uses-material-design: true

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template_bloc/presentation/ui/app/app.dart';
+import 'package:flutter_extensionz/flutter_extensionz.dart';
+import 'package:flutter_template/presentation/extensions/localization_extension.dart';
+import 'package:flutter_template/presentation/ui/app/app.dart';
 
 class AppView extends StatelessWidget {
   const AppView({Key? key}) : super(key: key);
@@ -13,12 +15,12 @@ class AppView extends StatelessWidget {
       },
       listener: (BuildContext context, AppState state) {
         if (state.status == AppStatus.failure) {
-          print('Do/show something on failure.');
+          context.showSnackBar(Text(state.errorMessage));
         }
       },
-      child: const Scaffold(
+      child: Scaffold(
         body: Center(
-          child: Text('Welcome to your app'),
+          child: Text(context.l10n.appTitle),
         ),
       ),
     );

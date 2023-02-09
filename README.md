@@ -1,6 +1,6 @@
-# Flutter Template with Bloc
+# Flutter Template
 
-A Flutter skeleton using the Bloc state management solution.
+A Flutter skeleton using Clean Architecture, the Bloc state management solution and Sembast.
 
 ## Installation
 
@@ -10,8 +10,8 @@ npx degit mj12358/flutter-template-bloc myapp
 
 ## Getting Started
 
-This project is a starting point for a Flutter application that follows
-[bloc state management](https://bloclibrary.dev/#/gettingstarted).
+This project is a starting point for a Flutter application that follows [clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html),
+[bloc state management](https://bloclibrary.dev/#/gettingstarted) and uses [sembast](https://pub.dev/packages/sembast) for data storage.
 
 For help getting started with Flutter development, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
@@ -38,7 +38,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 
 This project includes [change_app_package_name](https://pub.dev/packages/change_app_package_name) and [flutter_app_name](https://pub.dev/packages/flutter_app_name) to aid in changing the app/package name.
 
-First modify `pubspec.yaml` under `flutter_app_name`.
+First modify `pubspec.yaml` `name` and `flutter_app_name`.
 
 Then run:
 
@@ -46,6 +46,8 @@ Then run:
 flutter pub run flutter_app_name
 flutter pub run change_app_package_name:main com.company.myappname
 ```
+
+You can then use find an replace to switch any import references from the old name to the new one.
 
 ## Changing Launcher Icons
 
