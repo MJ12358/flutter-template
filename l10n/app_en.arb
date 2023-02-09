@@ -1,0 +1,6 @@
+{
+  "appTitle": "flutter_template_bloc",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
