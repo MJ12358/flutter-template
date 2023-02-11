@@ -5,7 +5,7 @@ A Flutter skeleton using Clean Architecture, the Bloc state management solution 
 ## Installation
 
 ```bash
-npx degit mj12358/flutter-template-bloc myapp
+npx degit mj12358/flutter-template myapp
 ```
 
 ## Getting Started
