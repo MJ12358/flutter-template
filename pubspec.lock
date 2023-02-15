@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: dart_extensionz
-      sha256: a6f5e8175f0ef2f778bd9acb06a89cc2acc60e9995fd9898ee7fd35dce7876d4
+      sha256: "90a1c09e5dac28a41eb6d1e07def77c0215f18c1dd3851e507e5e6a07dce6732"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   dart_lintz:
     dependency: "direct dev"
     description:
@@ -227,10 +227,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_extensionz
-      sha256: "83246af3cb3bf3d88cf34f146aba1eec94e85a34e14396552ed5c6fb156f08ba"
+      sha256: "0ba9579b6bd743aee61f76fe7e07701aa170b581d68dbf46ddbbda6eddb64b29"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "2.0.1"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -261,10 +261,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_themez
-      sha256: "2dae8bfc21cbc3d7f95c2f39a5e3f218a7ac4f6131d4f16742bafcc7dff1f677"
+      sha256: "6c667dd55276798960133112247d253800974daeddbd63e6de3803c9bc41a578"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.6"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

@@ -1,6 +1,6 @@
 abstract class Asset {
-  static const String launcher = 'assets/logos/launcher.svg';
-  static const String splash = 'assets/logos/splash.svg';
+  static const String launcher = 'assets/images/flutter_logo.png';
+  static const String splash = 'assets/logos/flutter_logo.png';
 }
 
 abstract class Period {

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_extensionz/flutter_extensionz.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/core/bloc_observer.dart';
 import 'package:flutter_template/domain/core/database.dart';
@@ -61,7 +62,8 @@ class _MainView extends StatelessWidget {
               }
             },
           ),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: AppLocalizations.localizationsDelegates +
+              FlutterExtensionzLocalizations.localizationsDelegates,
           onGenerateTitle: (BuildContext context) {
             return context.l10n.appTitle;
           },

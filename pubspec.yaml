@@ -10,15 +10,15 @@ environment:
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
-  dart_extensionz: ^2.0.0
+  dart_extensionz: ^2.0.1
   equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
-  flutter_extensionz: ^1.0.3
+  flutter_extensionz: ^2.0.1
   flutter_localizations:
     sdk: flutter
-  flutter_themez: ^1.0.4
+  flutter_themez: ^1.0.6
   get_it: ^7.2.0
   intl: ^0.17.0
   path_provider: ^2.0.12
