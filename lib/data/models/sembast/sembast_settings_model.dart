@@ -5,6 +5,7 @@ class SembastSettingsModel extends Settings {
   SembastSettingsModel({
     int? id,
     super.needsWelcome,
+    super.needsTutorial,
     super.darkMode,
     super.primaryColor,
     super.secondaryColor,
@@ -14,6 +15,7 @@ class SembastSettingsModel extends Settings {
 
   static const String keyId = 'id';
   static const String keyNeedsWelcome = 'needs_welcome';
+  static const String keyNeedsTutorial = 'needs_tutorial';
   static const String keyDarkMode = 'dark_mode';
   static const String keyPrimaryColor = 'primary_color';
   static const String keySecondaryColor = 'secondary_color';
@@ -22,6 +24,7 @@ class SembastSettingsModel extends Settings {
     return SembastSettingsModel(
       id: int.tryParse(settings.id),
       needsWelcome: settings.needsWelcome,
+      needsTutorial: settings.needsTutorial,
       darkMode: settings.darkMode,
       primaryColor: settings.primaryColor,
       secondaryColor: settings.secondaryColor,
@@ -32,6 +35,7 @@ class SembastSettingsModel extends Settings {
     return SembastSettingsModel(
       id: map?[keyId] as int?,
       needsWelcome: map?[keyNeedsWelcome] as bool?,
+      needsTutorial: map?[keyNeedsTutorial] as bool?,
       darkMode: map?[keyDarkMode] as bool?,
       primaryColor: map?[keyPrimaryColor] as int?,
       secondaryColor: map?[keySecondaryColor] as int?,
@@ -53,6 +57,7 @@ class SembastSettingsModel extends Settings {
     return <String, Object?>{
       keyId: id,
       keyNeedsWelcome: needsWelcome,
+      keyNeedsTutorial: needsTutorial,
       keyDarkMode: darkMode,
       keyPrimaryColor: primaryColor,
       keySecondaryColor: secondaryColor,

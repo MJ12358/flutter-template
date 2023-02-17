@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_template/domain/entities/settings.dart';
 import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
+import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -11,7 +12,9 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required GetSettingsUseCase getSettingsUseCase,
+    required SetSettingsUseCase setSettingsUseCase,
   })  : _getSettingsUseCase = getSettingsUseCase,
+        _setSettingsUseCase = setSettingsUseCase,
         super(const AppState()) {
     on<AppInitialized>(_onInit);
     on<AppFailure>(_onFailure);
@@ -19,6 +22,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   final GetSettingsUseCase _getSettingsUseCase;
+  final SetSettingsUseCase _setSettingsUseCase;
   StreamSubscription<Settings>? _settingsSubscription;
 
   Future<void> _onInit(
@@ -34,7 +38,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       _settingsSubscription = settingsResult.value?.listen((Settings data) {
         add(AppSettingsChanged(settings: data));
       });
-
       emit(
         state.copyWith(
           status: AppStatus.initial,

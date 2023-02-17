@@ -10,7 +10,7 @@ environment:
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
-  dart_extensionz: ^2.0.1
+  dart_extensionz: ^3.0.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter

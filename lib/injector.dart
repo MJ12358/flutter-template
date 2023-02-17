@@ -5,6 +5,7 @@ import 'package:flutter_template/domain/core/database.dart';
 import 'package:flutter_template/domain/datasources/settings_datasource.dart';
 import 'package:flutter_template/domain/repositories/settings_repository.dart';
 import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
+import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
 import 'package:flutter_template/presentation/ui/app/app.dart';
 import 'package:get_it/get_it.dart';
 
@@ -35,6 +36,7 @@ abstract class Injector {
     sl.registerLazySingleton<AppBloc>(() {
       return AppBloc(
         getSettingsUseCase: sl(),
+        setSettingsUseCase: sl(),
       );
     });
 
@@ -44,6 +46,12 @@ abstract class Injector {
 
     sl.registerLazySingleton<GetSettingsUseCase>(() {
       return GetSettingsUseCaseImpl(
+        settingsRepository: sl(),
+      );
+    });
+
+    sl.registerLazySingleton<SetSettingsUseCase>(() {
+      return SetSettingsUseCaseImpl(
         settingsRepository: sl(),
       );
     });

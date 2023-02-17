@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: dart_extensionz
-      sha256: "90a1c09e5dac28a41eb6d1e07def77c0215f18c1dd3851e507e5e6a07dce6732"
+      sha256: ea275bc39a45dd6ec817cc7b03e7f495987bef5aad2bfc3cc13f419681635b85
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.0"
   dart_lintz:
     dependency: "direct dev"
     description:
