@@ -69,7 +69,10 @@ class _MainView extends StatelessWidget {
           },
           restorationScopeId: 'app',
           supportedLocales: AppLocalizations.supportedLocales,
-          theme: state.settings.darkMode ? theme.dark() : theme.light(),
+          theme: theme.light(),
+          darkTheme: theme.dark(),
+          themeMode:
+              state.settings.darkMode ? ThemeMode.dark : ThemeMode.system,
         );
       },
     );
