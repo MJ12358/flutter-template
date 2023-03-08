@@ -8,19 +8,19 @@ publish_to: "none"
 # MINOR version when you add functionality in a backwards compatible manner
 # PATCH version when you make backwards compatible bug fixes
 # + build version
-version: 1.0.0+1
+version: 0.0.1+1
 
 environment:
   # this is the dart sdk version
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
-  dart_extensionz: ^3.1.0
+  dart_extensionz: ^4.0.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
-  flutter_extensionz: ^2.0.1
+  flutter_extensionz: ^2.1.0
   flutter_localizations:
     sdk: flutter
   flutter_themez: ^1.0.6

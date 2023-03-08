@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: dart_extensionz
-      sha256: "80123a950a44614c30726961312be0323d90728782ed7df5d5dc3b56f880dbb7"
+      sha256: "96eb668b01befed36fa4e2b0950e616152a6744e546f477bdb7257cc762819de"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "4.0.0"
   dart_lintz:
     dependency: "direct dev"
     description:
@@ -227,10 +227,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_extensionz
-      sha256: "0ba9579b6bd743aee61f76fe7e07701aa170b581d68dbf46ddbbda6eddb64b29"
+      sha256: d4c9c178bd888c1f02d7ac768c13a3356069f7aa40bdccb57b4b9b940ae1ad3a
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
