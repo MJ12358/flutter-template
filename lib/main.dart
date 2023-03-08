@@ -49,6 +49,8 @@ class _MainView extends StatelessWidget {
         );
 
         return MaterialApp(
+          color: theme.primaryColor,
+          debugShowMaterialGrid: state.settings.showMaterialGrid,
           home: BlocBuilder<AppBloc, AppState>(
             buildWhen: (AppState previous, AppState current) {
               return previous.status != current.status;
@@ -68,6 +70,8 @@ class _MainView extends StatelessWidget {
             return context.l10n.appTitle;
           },
           restorationScopeId: 'app',
+          showPerformanceOverlay: state.settings.showPerformanceOverlay,
+          showSemanticsDebugger: state.settings.showSemanticOverlay,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: theme.light(),
           darkTheme: theme.dark(),

@@ -9,6 +9,9 @@ class SembastSettingsModel extends Settings {
     super.darkMode,
     super.primaryColor,
     super.secondaryColor,
+    super.showMaterialGrid,
+    super.showPerformanceOverlay,
+    super.showSemanticOverlay,
   }) : super(
           id: id?.toString(),
         );
@@ -19,6 +22,9 @@ class SembastSettingsModel extends Settings {
   static const String keyDarkMode = 'dark_mode';
   static const String keyPrimaryColor = 'primary_color';
   static const String keySecondaryColor = 'secondary_color';
+  static const String keyShowMaterialGrid = 'show_material_grid';
+  static const String keyShowPerformanceOverlay = 'show_performance_overlay';
+  static const String keyShowSemanticOverlay = 'show_semantic_overlay';
 
   factory SembastSettingsModel.fromEntity(Settings settings) {
     return SembastSettingsModel(
@@ -28,6 +34,9 @@ class SembastSettingsModel extends Settings {
       darkMode: settings.darkMode,
       primaryColor: settings.primaryColor,
       secondaryColor: settings.secondaryColor,
+      showMaterialGrid: settings.showMaterialGrid,
+      showPerformanceOverlay: settings.showPerformanceOverlay,
+      showSemanticOverlay: settings.showSemanticOverlay,
     );
   }
 
@@ -39,6 +48,9 @@ class SembastSettingsModel extends Settings {
       darkMode: map?[keyDarkMode] as bool?,
       primaryColor: map?[keyPrimaryColor] as int?,
       secondaryColor: map?[keySecondaryColor] as int?,
+      showMaterialGrid: map?[keyShowMaterialGrid] as bool?,
+      showPerformanceOverlay: map?[keyShowPerformanceOverlay] as bool?,
+      showSemanticOverlay: map?[keyShowSemanticOverlay] as bool?,
     );
   }
 
@@ -61,6 +73,9 @@ class SembastSettingsModel extends Settings {
       keyDarkMode: darkMode,
       keyPrimaryColor: primaryColor,
       keySecondaryColor: secondaryColor,
+      keyShowMaterialGrid: showMaterialGrid,
+      keyShowPerformanceOverlay: showPerformanceOverlay,
+      keyShowSemanticOverlay: showSemanticOverlay,
     };
   }
 }
