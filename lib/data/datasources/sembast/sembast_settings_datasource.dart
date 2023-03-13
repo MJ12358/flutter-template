@@ -9,8 +9,8 @@ class SembastSettingsDataSource implements SettingsDataSource {
     required domain.Database database,
   }) : _database = database.db as Database;
 
-  static const String storeName = 'settings';
   final Database _database;
+  static const String storeName = 'settings';
 
   StoreRef<int, Map<String, Object?>> get _store =>
       intMapStoreFactory.store(storeName);

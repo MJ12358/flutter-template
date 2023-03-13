@@ -3,6 +3,13 @@ abstract class Asset {
   static const String splash = 'assets/logos/flutter_logo.png';
 }
 
+abstract class Opaque {
+  static const double full = 1.0;
+  static double get quarter => full * 0.25;
+  static double get half => full * 0.50;
+  static double get threeQuarter => full * 0.75;
+}
+
 abstract class Period {
   // in milliseconds
   static const int full = 500;

@@ -22,6 +22,11 @@ class SembastDatabase implements domain.Database {
     _db = await dbFactory.openDatabase(
       join(dir.path, databaseName),
       version: databaseVersion,
+      onVersionChanged: (Database db, int oldVersion, int newVersion) async {
+        if (oldVersion == 0) {
+          // https://github.com/tekartik/sembast.dart/blob/master/sembast/doc/open.md#preloading-data
+        }
+      },
     );
 
     enableSembastCooperator();
