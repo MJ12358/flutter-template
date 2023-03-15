@@ -15,19 +15,19 @@ environment:
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
-  dart_extensionz: ^4.0.0
+  dart_extensionz: ^4.2.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
-  flutter_extensionz: ^2.1.0
+  flutter_extensionz: ^2.2.0
   flutter_localizations:
     sdk: flutter
   flutter_themez: ^1.0.6
   get_it: ^7.2.0
   intl: ^0.17.0
-  path_provider: ^2.0.12
-  sembast: ^3.4.0+6
+  path_provider: ^2.0.13
+  sembast: ^3.4.1+1
 
 dev_dependencies:
   bloc_test: ^9.1.1
@@ -36,7 +36,7 @@ dev_dependencies:
   # flutter_app_name: ^0.1.1 # they need to update dependencies
   flutter_app_name:
     git: https://github.com/qixotic/flutter_app_name
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.12.0
   flutter_native_splash: ^2.2.16
   flutter_test:
     sdk: flutter
