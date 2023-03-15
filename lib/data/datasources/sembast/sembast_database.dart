@@ -16,7 +16,7 @@ class SembastDatabase implements domain.Database {
   Future<void> init() async {
     disableSembastCooperator();
 
-    final Directory dir = await getApplicationDocumentsDirectory();
+    final Directory dir = await getApplicationSupportDirectory();
     final DatabaseFactory dbFactory = databaseFactoryIo;
 
     _db = await dbFactory.openDatabase(
