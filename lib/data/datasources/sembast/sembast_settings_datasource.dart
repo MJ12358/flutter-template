@@ -10,15 +10,18 @@ class SembastSettingsDataSource implements SettingsDataSource {
   }) : _database = database.db as Database;
 
   final Database _database;
+
   static const String storeName = 'settings';
 
-  StoreRef<int, Map<String, Object?>> get _store =>
+  static final StoreRef<int, Map<String, Object?>> _store =
       intMapStoreFactory.store(storeName);
 
   @override
   Stream<Settings> get() {
-    final RecordRef<int, Map<String, Object?>> record = _store.record(0);
-    return record.onSnapshot(_database).map(SembastSettingsModel.fromRecord);
+    return _store
+        .record(0)
+        .onSnapshot(_database)
+        .map(SembastSettingsModel.fromRecord);
   }
 
   @override
@@ -27,6 +30,7 @@ class SembastSettingsDataSource implements SettingsDataSource {
   }) async {
     final Map<String, Object?> data =
         SembastSettingsModel.fromEntity(settings).toMap();
+
     await _store.record(0).put(_database, data);
   }
 }
