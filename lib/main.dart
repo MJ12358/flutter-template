@@ -50,6 +50,7 @@ class _MainView extends StatelessWidget {
 
         return MaterialApp(
           color: theme.primaryColor,
+          debugShowCheckedModeBanner: false,
           debugShowMaterialGrid: state.settings.showMaterialGrid,
           home: BlocBuilder<AppBloc, AppState>(
             buildWhen: (AppState previous, AppState current) {
