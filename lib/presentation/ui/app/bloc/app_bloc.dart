@@ -17,8 +17,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         _setSettingsUseCase = setSettingsUseCase,
         super(const AppState()) {
     on<AppInitialized>(_onInit);
-    on<AppFailure>(_onFailure);
-    on<AppSettingsChanged>(_onSettingsChanged);
+    on<AppFailed>(_onFailure);
+    on<AppSettingsChanged>(_onSettingsChange);
+    on<AppTutorialCompleted>(_onTutorialComplete);
   }
 
   final GetSettingsUseCase _getSettingsUseCase;
@@ -33,7 +34,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         await _getSettingsUseCase(const GetSettingsParams());
 
     if (settingsResult.hasError) {
-      add(AppFailure(message: settingsResult.errorMessage!));
+      add(AppFailed(message: settingsResult.errorMessage!));
     } else {
       _settingsSubscription = settingsResult.value?.listen((Settings data) {
         add(AppSettingsChanged(settings: data));
@@ -47,7 +48,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onFailure(
-    AppFailure event,
+    AppFailed event,
     Emitter<AppState> emit,
   ) {
     emit(
@@ -58,7 +59,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
-  void _onSettingsChanged(
+  void _onSettingsChange(
     AppSettingsChanged event,
     Emitter<AppState> emit,
   ) {
@@ -67,6 +68,23 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         settings: event.settings,
       ),
     );
+  }
+
+  Future<void> _onTutorialComplete(
+    AppTutorialCompleted event,
+    Emitter<AppState> emit,
+  ) async {
+    final SetSettingsResult result = await _setSettingsUseCase(
+      SetSettingsParams(
+        settings: state.settings.copyWith(
+          needsTutorial: false,
+        ),
+      ),
+    );
+
+    if (result.hasError) {
+      add(AppFailed(message: result.errorMessage!));
+    }
   }
 
   @override

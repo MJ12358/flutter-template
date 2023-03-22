@@ -11,8 +11,8 @@ class AppInitialized extends AppEvent {
   const AppInitialized();
 }
 
-class AppFailure extends AppEvent {
-  const AppFailure({
+class AppFailed extends AppEvent {
+  const AppFailed({
     required this.message,
   });
 
@@ -35,4 +35,8 @@ class AppSettingsChanged extends AppEvent {
   List<Object> get props => <Object>[
         settings,
       ];
+}
+
+class AppTutorialCompleted extends AppEvent {
+  const AppTutorialCompleted();
 }
