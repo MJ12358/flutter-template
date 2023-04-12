@@ -227,10 +227,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_extensionz
-      sha256: "1ca09c72ff69c733f7f34238d8f2b8a0ce04b1e2505d807e4cb287eee9bb2d39"
+      sha256: "69dc6014e177e62578ce946560a6b1bba7a6d407d7fb352a2b2e0a10e14d72af"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "3.0.1"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -245,7 +245,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_native_splash:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_native_splash
       sha256: "048bd1f1dc0e5ea25899f702815934d9a9e916fe23451c320e7dd94d5e3ad933"
@@ -261,10 +261,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_themez
-      sha256: "6c667dd55276798960133112247d253800974daeddbd63e6de3803c9bc41a578"
+      sha256: "6b6c83361ac393b1455c7d090b3ea511abb233083c224a944491f673ab402f9a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.7"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

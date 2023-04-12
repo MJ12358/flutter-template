@@ -80,8 +80,8 @@ A convenience script is located in the `scripts` folder for generating a new key
 Move the generated keystore into `android/app` and create a `android/key.properties` file with the following:
 
 ```properties
-storePassword=mysupersecretpassword
-keyPassword=mysupersecretpassword
+storePassword=yourSuperSecretPassword
+keyPassword=yourSuperSecretPassword
 keyAlias=release
 storeFile=release_keystore.jks
 ```

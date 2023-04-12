@@ -1,6 +1,7 @@
 part of 'app_bloc.dart';
 
 enum AppStatus {
+  initializing,
   loading,
   initial,
   success,
@@ -12,7 +13,7 @@ enum AppStatus {
 class AppState extends Equatable {
   const AppState({
     this.settings = const Settings(),
-    this.status = AppStatus.loading,
+    this.status = AppStatus.initializing,
     this.errorMessage = '',
   });
 
