@@ -48,7 +48,9 @@ class _MainView extends StatelessWidget {
         FlutterNativeSplash.remove();
       },
       buildWhen: (AppState previous, AppState current) {
-        return previous.settings != current.settings;
+        return previous.settings != current.settings ||
+            previous.status == AppStatus.initializing &&
+                current.status != AppStatus.initializing;
       },
       builder: (BuildContext context, AppState state) {
         if (state.status == AppStatus.initializing) {

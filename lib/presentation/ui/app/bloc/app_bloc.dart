@@ -35,16 +35,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     if (settingsResult.hasError) {
       add(AppFailed(message: settingsResult.errorMessage!));
-    } else {
-      _settingsSubscription = settingsResult.value?.listen((Settings data) {
-        add(AppSettingsChanged(settings: data));
-      });
-      emit(
-        state.copyWith(
-          status: AppStatus.initial,
-        ),
-      );
+      return;
     }
+
+    _settingsSubscription = settingsResult.value?.listen((Settings data) {
+      add(AppSettingsChanged(settings: data));
+    });
+
+    emit(
+      state.copyWith(
+        status: AppStatus.initial,
+      ),
+    );
   }
 
   void _onFailure(

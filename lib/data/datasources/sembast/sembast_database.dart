@@ -7,8 +7,8 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class SembastDatabase implements domain.Database {
-  static const String databaseName = 'sembast.db';
-  static const int databaseVersion = 1;
+  static const String _databaseName = 'sembast.db';
+  static const int _databaseVersion = 1;
 
   late Database _db;
 
@@ -20,8 +20,8 @@ class SembastDatabase implements domain.Database {
     final DatabaseFactory dbFactory = databaseFactoryIo;
 
     _db = await dbFactory.openDatabase(
-      join(dir.path, databaseName),
-      version: databaseVersion,
+      join(dir.path, _databaseName),
+      version: _databaseVersion,
       onVersionChanged: (Database db, int oldVersion, int newVersion) async {
         if (oldVersion == 0) {
           // https://github.com/tekartik/sembast.dart/blob/master/sembast/doc/open.md#preloading-data
