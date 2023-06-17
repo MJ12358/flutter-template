@@ -8,8 +8,8 @@ import 'package:flutter_template/domain/core/database.dart';
 import 'package:flutter_template/injector.dart';
 import 'package:flutter_template/presentation/extensions/localization_extension.dart';
 import 'package:flutter_template/presentation/ui/app/app.dart';
-import 'package:flutter_template/presentation/widgets/progress_indicator/progress_indicator.dart';
 import 'package:flutter_themez/flutter_themez.dart';
+import 'package:flutter_widgetz/flutter_widgetz.dart';
 
 void main() async {
   final WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ void main() async {
 }
 
 class _Main extends StatelessWidget {
-  const _Main({Key? key}) : super(key: key);
+  const _Main();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _Main extends StatelessWidget {
 }
 
 class _MainView extends StatelessWidget {
-  const _MainView({Key? key}) : super(key: key);
+  const _MainView();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _MainView extends StatelessWidget {
       },
       builder: (BuildContext context, AppState state) {
         if (state.status == AppStatus.initializing) {
-          return const CustomProgressIndicator();
+          return const CustomProgressIndicator.circular();
         }
 
         final FlutterThemez theme = FlutterThemez(
@@ -87,7 +87,7 @@ class _MainView extends StatelessWidget {
     switch (state.status) {
       case AppStatus.initializing:
       case AppStatus.loading:
-        return const CustomProgressIndicator();
+        return const CustomProgressIndicator.circular();
       default:
         return const AppView();
     }

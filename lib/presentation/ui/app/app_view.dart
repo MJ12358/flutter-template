@@ -5,7 +5,7 @@ import 'package:flutter_template/presentation/extensions/localization_extension.
 import 'package:flutter_template/presentation/ui/app/app.dart';
 
 class AppView extends StatelessWidget {
-  const AppView({Key? key}) : super(key: key);
+  const AppView({super.key});
 
   @override
   Widget build(BuildContext context) {
