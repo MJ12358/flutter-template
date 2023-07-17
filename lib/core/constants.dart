@@ -1,6 +1,13 @@
+import 'package:flutter/foundation.dart' as foundation;
+
 abstract class Asset {
   static const String launcher = 'assets/images/flutter_logo.png';
   static const String splash = 'assets/logos/flutter_logo.png';
+}
+
+abstract class Build {
+  static const bool isDebug = foundation.kDebugMode;
+  static const bool isRelease = foundation.kReleaseMode;
 }
 
 abstract class Opaque {

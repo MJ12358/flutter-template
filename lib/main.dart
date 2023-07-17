@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_template/core/bloc_observer.dart';
+import 'package:flutter_template/core/constants.dart';
 import 'package:flutter_template/domain/core/database.dart';
 import 'package:flutter_template/injector.dart';
 import 'package:flutter_template/presentation/extensions/localization_extension.dart';
@@ -16,7 +16,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: binding);
   await Injector.init();
   await Injector.sl<Database>(instanceName: Injector.local).init();
-  if (kDebugMode) {
+  if (Build.isDebug) {
     Bloc.observer = AppBlocObserver();
   }
   runApp(const _Main());
