@@ -227,10 +227,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_extensionz
-      sha256: "41d2b4fd9b7113f3b23f4164ec274bbe9d3cc5a580fe5b9089ab98fbeb829e48"
+      sha256: "02a42746ea0850117da59cf148e8ddad33d5df413e8f51df379c7c58a47ca518"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -261,10 +261,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_themez
-      sha256: "861629a84f55956db5029ea6351ab2da1b86a092352cddb0a4b539a9465969a9"
+      sha256: ee75daca3ff62dd076b1941dca43db31eb54984727c80b3761aea3e2723e7414
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -274,10 +274,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_widgetz
-      sha256: "2271dd3158a3e40194bd3fac4f1519b18b9aa188a62700f408842c38f24e6434"
+      sha256: e865100aeba643789c4e02f43c1df0fdf4aa30123d895832a326cbce27a694ee
       url: "https://pub.dev"
     source: hosted
-    version: "4.9.2"
+    version: "5.0.3"
   frontend_server_client:
     dependency: transitive
     description:
@@ -578,10 +578,10 @@ packages:
     dependency: "direct main"
     description:
       name: sembast
-      sha256: "74f6c57e2d230c55287372830239701286628b81ceb06a5507d7686a6d7d4b44"
+      sha256: da8dd3774b6001bde09378da28e94c40bd4daecde32adb44837517c12e991321
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.5"
+    version: "3.4.9"
   shelf:
     dependency: transitive
     description:
