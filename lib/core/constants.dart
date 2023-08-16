@@ -38,7 +38,4 @@ abstract class Style {
   static const double radiusSmall = 4.0;
   static const double radiusMedium = 8.0;
   static const double radiusLarge = 15.0;
-
-  static const int appleColor = 0xFF000000;
-  static const int googleColor = 0xFF5982F2;
 }

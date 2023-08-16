@@ -1,4 +1,5 @@
 import 'package:flutter_template/domain/entities/settings.dart';
+import 'package:flutter_template/domain/repositories/analytics_repository.dart';
 import 'package:flutter_template/domain/repositories/settings_repository.dart';
 import 'package:flutter_template/domain/usecases/usecase.dart';
 
@@ -7,9 +8,12 @@ abstract class GetSettingsUseCase
 
 class GetSettingsUseCaseImpl implements GetSettingsUseCase {
   const GetSettingsUseCaseImpl({
+    required AnalyticsRepository analyticsRepository,
     required SettingsRepository settingsRepository,
-  }) : _settingsRepository = settingsRepository;
+  })  : _analyticsRepository = analyticsRepository,
+        _settingsRepository = settingsRepository;
 
+  final AnalyticsRepository _analyticsRepository;
   final SettingsRepository _settingsRepository;
 
   @override
@@ -19,7 +23,8 @@ class GetSettingsUseCaseImpl implements GetSettingsUseCase {
       return GetSettingsResult(
         value: settings,
       );
-    } catch (e) {
+    } catch (e, s) {
+      _analyticsRepository.logException(details: e, stackTrace: s);
       return GetSettingsResult(
         errorMessage: '$e',
       );

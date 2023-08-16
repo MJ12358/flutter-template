@@ -1,8 +1,12 @@
+import 'package:flutter_template/data/datasources/firebase/firebase_analytics_datasource.dart';
 import 'package:flutter_template/data/datasources/sembast/sembast_database.dart';
 import 'package:flutter_template/data/datasources/sembast/sembast_settings_datasource.dart';
+import 'package:flutter_template/data/repositories/analytics_repository_impl.dart';
 import 'package:flutter_template/data/repositories/settings_repository_impl.dart';
 import 'package:flutter_template/domain/core/database.dart';
+import 'package:flutter_template/domain/datasources/analytics_datasource.dart';
 import 'package:flutter_template/domain/datasources/settings_datasource.dart';
+import 'package:flutter_template/domain/repositories/analytics_repository.dart';
 import 'package:flutter_template/domain/repositories/settings_repository.dart';
 import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
 import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
@@ -46,12 +50,14 @@ abstract class Injector {
 
     sl.registerLazySingleton<GetSettingsUseCase>(() {
       return GetSettingsUseCaseImpl(
+        analyticsRepository: sl(),
         settingsRepository: sl(),
       );
     });
 
     sl.registerLazySingleton<SetSettingsUseCase>(() {
       return SetSettingsUseCaseImpl(
+        analyticsRepository: sl(),
         settingsRepository: sl(),
       );
     });
@@ -59,6 +65,12 @@ abstract class Injector {
     /// Repository Registration
     ///
     /// Repositories are to handle datasources
+
+    sl.registerLazySingleton<AnalyticsRepository>(() {
+      return AnalyticsRepositoryImpl(
+        remoteDataSource: sl(instanceName: remote),
+      );
+    });
 
     sl.registerLazySingleton<SettingsRepository>(() {
       return SettingsRepositoryImpl(
@@ -69,6 +81,13 @@ abstract class Injector {
     /// Datasource Registration
     ///
     /// Datasources retrieve data
+
+    sl.registerLazySingleton<AnalyticsDataSource>(
+      () {
+        return FirebaseAnalyticsDataSource();
+      },
+      instanceName: remote,
+    );
 
     sl.registerLazySingleton<SettingsDataSource>(
       () {

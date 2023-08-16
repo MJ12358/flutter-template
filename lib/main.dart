@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_template/core/bloc_observer.dart';
-import 'package:flutter_template/core/constants.dart';
-import 'package:flutter_template/domain/core/database.dart';
+import 'package:flutter_template/bootstrap.dart';
 import 'package:flutter_template/injector.dart';
 import 'package:flutter_template/presentation/extensions/localization_extension.dart';
 import 'package:flutter_template/presentation/ui/app/app.dart';
@@ -12,30 +10,32 @@ import 'package:flutter_themez/flutter_themez.dart';
 import 'package:flutter_widgetz/flutter_widgetz.dart';
 
 void main() async {
-  final WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: binding);
   await Injector.init();
-  await Injector.sl<Database>(instanceName: Injector.local).init();
-  if (Build.isDebug) {
-    Bloc.observer = AppBlocObserver();
-  }
-  runApp(const _Main());
+  await Injector.sl<Bootstrap>().call(_Main.new);
 }
 
 class _Main extends StatelessWidget {
-  const _Main();
+  _Main();
+
+  // Storing this here prevents this issue:
+  // https://stackoverflow.com/questions/60927958/flutter-being-sent-back-to-initial-page-after-hot-reload
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AppBloc>(
       create: (_) => Injector.sl<AppBloc>()..add(const AppInitialized()),
-      child: const _MainView(),
+      child: _MainView(_navigatorKey),
     );
   }
 }
 
 class _MainView extends StatelessWidget {
-  const _MainView();
+  const _MainView(this._navigatorKey);
+
+  final GlobalKey<NavigatorState> _navigatorKey;
+
+  NavigatorState get _navigator => _navigatorKey.currentState!;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +63,7 @@ class _MainView extends StatelessWidget {
         );
 
         return MaterialApp(
+          navigatorKey: _navigatorKey,
           color: theme.primaryColor,
           debugShowCheckedModeBanner: false,
           debugShowMaterialGrid: state.settings.showMaterialGrid,
