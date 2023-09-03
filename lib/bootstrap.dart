@@ -24,7 +24,7 @@ class Bootstrap {
 
     // ensure `Injector.init()` is run in `main`
     await Injector.sl<Database>(instanceName: Injector.local).init();
-    // await Injector.sl<Database>(instanceName: Injector.remote).init();
+    await Injector.sl<Database>(instanceName: Injector.remote).init();
     // await Injector.sl<Database>(instanceName: Injector.revenue).init();
 
     if (Build.isDebug) {
