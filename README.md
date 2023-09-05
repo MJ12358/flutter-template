@@ -43,8 +43,8 @@ First modify `pubspec.yaml` `name` and `flutter_app_name`.
 Then run:
 
 ```bash
-flutter pub run flutter_app_name
-flutter pub run change_app_package_name:main com.company.myappname
+dart run flutter_app_name
+dart run change_app_package_name:main com.company.myappname
 ```
 
 You can then use find an replace to switch any import references from the old name to the new one.
@@ -58,7 +58,7 @@ First determine which icon you want to use. Place it into the `assets` folder an
 Then run:
 
 ```bash
-flutter pub run flutter_launcher_icons:main
+dart run flutter_launcher_icons:main
 ```
 
 ## Changing the Splash Screen
@@ -70,7 +70,7 @@ First determine which image you want to use. Place it into the `assets` folder a
 Then run:
 
 ```bash
-flutter pub run flutter_native_splash:create
+dart run flutter_native_splash:create
 ```
 
 ## Signing Your App
