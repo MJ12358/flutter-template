@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:flutter_template/domain/datasources/network_datasource.dart';
 import 'package:flutter_template/domain/exceptions/platform_not_supported_exception.dart';
@@ -17,7 +15,7 @@ class NetworkRepositoryImpl implements NetworkRepository {
 
   @override
   Future<bool> get isConnected {
-    switch (Platform().target) {
+    switch (PlatformExtension.target) {
       case TargetPlatform.android:
         return _isConnected(_androidDataSource);
       case TargetPlatform.iOS:

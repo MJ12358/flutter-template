@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:flutter_template/domain/datasources/about_datasource.dart';
 import 'package:flutter_template/domain/entities/about.dart';
@@ -18,7 +16,7 @@ class AboutRepositoryImpl implements AboutRepository {
 
   @override
   Future<About> get() {
-    switch (Platform().target) {
+    switch (PlatformExtension.target) {
       case TargetPlatform.android:
         return _androidDataSource.get();
       case TargetPlatform.iOS:
