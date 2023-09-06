@@ -1,31 +1,62 @@
 import 'package:flutter/foundation.dart' as foundation;
 
-abstract class Asset {
+class Asset {
+  Asset._();
+
+  /// The launcher asset.
   static const String launcher = 'assets/images/flutter_logo.png';
+
+  /// The splash asset.
   static const String splash = 'assets/logos/flutter_logo.png';
 }
 
-abstract class Build {
+class Build {
+  Build._();
+
+  /// A constant that is true if the application was compiled in debug mode.
   static const bool isDebug = foundation.kDebugMode;
+
+  /// A constant that is true if the application was compiled in release mode.
   static const bool isRelease = foundation.kReleaseMode;
+
+  /// A constant that is true if the application was compiled in profile mode.
+  static const bool isProfile = foundation.kProfileMode;
 }
 
-abstract class Opaque {
+class Opaque {
+  Opaque._();
+
+  /// A constant depicting a "full" opacity.
   static const double full = 1.0;
+
+  /// One quarter of [full].
   static double get quarter => full * 0.25;
+
+  /// One half of [full].
   static double get half => full * 0.50;
+
+  /// Three quarter of [full].
   static double get threeQuarter => full * 0.75;
 }
 
-abstract class Period {
-  // in milliseconds
+class Period {
+  Period._();
+
+  /// A constant depicting a "full" period in milliseconds.
   static const int full = 500;
+
+  /// One quarter of [full] in milliseconds.
   static int get quarter => (full * 0.25).toInt();
+
+  /// One half of [full] in milliseconds.
   static int get half => (full * 0.50).toInt();
+
+  /// Double [full] in milliseconds.
   static int get duplex => (full * 2.0).toInt();
 }
 
-abstract class Style {
+class Style {
+  Style._();
   static const double letterSpacingSmall = 0.75;
   static const double letterSpacingMedium = 1.25;
   static const double letterSpacingLarge = 1.50;
