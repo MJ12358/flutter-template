@@ -189,10 +189,10 @@ packages:
     dependency: "direct dev"
     description:
       name: dart_lintz
-      sha256: b2d3260597e0e2723c422c2bb9362a8872c4342e03e45db87e07731264673ae6
+      sha256: eb2cd45e0c3eeeda29cd42e9d8f84d6799483ef266987682c9a5e04ccd8fb674
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   dbus:
     dependency: transitive
     description:
@@ -381,10 +381,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_themez
-      sha256: ee75daca3ff62dd076b1941dca43db31eb54984727c80b3761aea3e2723e7414
+      sha256: a3bfdbc44a6fe50481c7e722f6408a25b42562dc72a8c85d057dec86153d5dba
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -394,10 +394,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_widgetz
-      sha256: bc7f2c6c4a7efc7878356c9b2ac13d9c3369be72a8466f2241e354d859512db0
+      sha256: c607b10ed8ece90777b350deb1f53af8e3c64ada56d01ccd990d729783d22a6c
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.1"
+    version: "5.2.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -463,7 +463,7 @@ packages:
     source: hosted
     version: "4.0.17"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"

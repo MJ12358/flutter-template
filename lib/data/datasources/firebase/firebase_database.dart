@@ -9,7 +9,7 @@ class FirebaseDatabase implements Database {
 
   @override
   Future<void> init() async {
-    // TODO: initialize FlutterFire via "flutterfire configure"
+    // TODO: initialize Firebase via "flutterfire configure"
     // await Firebase.initializeApp(
     //   options: DefaultFirebaseOptions.currentPlatform,
     // );
