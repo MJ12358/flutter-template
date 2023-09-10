@@ -30,7 +30,8 @@ import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.d
 import 'package:flutter_template/presentation/ui/app/app.dart';
 import 'package:get_it/get_it.dart';
 
-abstract class Injector {
+class Injector {
+  Injector._();
   static final GetIt sl = GetIt.instance;
   static const String local = 'local';
   static const String remote = 'remote';
