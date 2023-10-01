@@ -24,4 +24,16 @@ class FirebaseDatabase implements Database {
   Object get db {
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> export() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> import({
+    required String data,
+  }) {
+    throw UnimplementedError();
+  }
 }

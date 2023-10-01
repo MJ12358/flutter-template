@@ -5,4 +5,8 @@
 abstract class Database {
   Future<void> init();
   Object get db;
+  Future<String> export();
+  Future<void> import({
+    required String data,
+  });
 }
