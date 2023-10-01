@@ -54,12 +54,12 @@ class _MainView extends StatelessWidget {
       },
       builder: (BuildContext context, AppState state) {
         if (state.status == AppStatus.initializing) {
-          return const CustomProgressIndicator.circular();
+          return CustomProgressIndicator.circular();
         }
 
         final FlutterThemez theme = FlutterThemez(
-          primaryColor: state.settings.primaryColor,
-          secondaryColor: state.settings.secondaryColor,
+          primaryColor: Color(state.settings.primaryColor),
+          secondaryColor: Color(state.settings.secondaryColor),
         );
 
         return MaterialApp(
@@ -88,7 +88,7 @@ class _MainView extends StatelessWidget {
     switch (state.status) {
       case AppStatus.initializing:
       case AppStatus.loading:
-        return const CustomProgressIndicator.circular();
+        return CustomProgressIndicator.circular();
       default:
         return const AppView();
     }
