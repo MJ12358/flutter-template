@@ -85,3 +85,22 @@ keyPassword=yourSuperSecretPassword
 keyAlias=release
 storeFile=keystore.jks
 ```
+
+## Initializing Firebase
+
+Firebase Crashlytics is built into this project but can be easily removed if not needed.
+
+To initialize run the following:
+
+```bash
+flutterfire configure
+```
+
+## Signing Report
+
+First you must build the app, then the signing report will become available.
+
+```bash
+cd android
+gradlew signingReport
+```
