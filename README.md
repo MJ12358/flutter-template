@@ -83,5 +83,5 @@ Move the generated keystore into `android/app` and create a `android/key.propert
 storePassword=yourSuperSecretPassword
 keyPassword=yourSuperSecretPassword
 keyAlias=release
-storeFile=release_keystore.jks
+storeFile=keystore.jks
 ```
