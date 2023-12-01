@@ -1,4 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_template/domain/datasources/analytics_datasource.dart';
 
@@ -19,13 +18,7 @@ import 'package:flutter_template/domain/datasources/analytics_datasource.dart';
 ///
 /// value: 100
 class FirebaseAnalyticsDataSource implements AnalyticsDataSource {
-  FirebaseAnalytics get _analytics => FirebaseAnalytics.instance;
   FirebaseCrashlytics get _crashlytics => FirebaseCrashlytics.instance;
-
-  @override
-  Future<void> logAppOpen() {
-    return _analytics.logAppOpen();
-  }
 
   @override
   Future<void> logException({
@@ -33,19 +26,5 @@ class FirebaseAnalyticsDataSource implements AnalyticsDataSource {
     StackTrace? stackTrace,
   }) {
     return _crashlytics.recordError(details, stackTrace);
-  }
-
-  @override
-  Future<void> logLogin({
-    String? provider,
-  }) {
-    return _analytics.logLogin(loginMethod: provider);
-  }
-
-  @override
-  Future<void> logLogout() {
-    return _analytics.logEvent(
-      name: 'logout',
-    );
   }
 }

@@ -12,7 +12,9 @@ class AndroidNetworkDataSource implements NetworkDataSource {
       case ConnectivityResult.vpn:
       case ConnectivityResult.wifi:
         return true;
-      default:
+      case ConnectivityResult.bluetooth:
+      case ConnectivityResult.other:
+      case ConnectivityResult.none:
         return false;
     }
   }

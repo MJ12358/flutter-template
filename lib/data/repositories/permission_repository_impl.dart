@@ -14,12 +14,36 @@ class PermissionRepositoryImpl implements PermissionRepository {
   final PermissionDataSource _iosDataSource;
 
   @override
-  Future<void> example() {
+  Future<void> requestCamera() {
     switch (PlatformExtension.target) {
       case TargetPlatform.android:
-        return _androidDataSource.example();
+        return _androidDataSource.requestCamera();
       case TargetPlatform.iOS:
-        return _iosDataSource.example();
+        return _iosDataSource.requestCamera();
+      default:
+        throw PlatformNotSupportedException();
+    }
+  }
+
+  @override
+  Future<void> requestLocation() {
+    switch (PlatformExtension.target) {
+      case TargetPlatform.android:
+        return _androidDataSource.requestLocation();
+      case TargetPlatform.iOS:
+        return _iosDataSource.requestLocation();
+      default:
+        throw PlatformNotSupportedException();
+    }
+  }
+
+  @override
+  Future<void> requestStorage() {
+    switch (PlatformExtension.target) {
+      case TargetPlatform.android:
+        return _androidDataSource.requestStorage();
+      case TargetPlatform.iOS:
+        return _iosDataSource.requestStorage();
       default:
         throw PlatformNotSupportedException();
     }

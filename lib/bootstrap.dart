@@ -40,8 +40,6 @@ class Bootstrap {
       );
     };
 
-    _analyticsRepository.logAppOpen();
-
     runApp(await builder());
   }
 }
