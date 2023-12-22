@@ -26,9 +26,12 @@ class SembastDatabase implements domain.Database {
       join(dir.path, _databaseName),
       version: _databaseVersion,
       onVersionChanged: (Database db, int oldVersion, int newVersion) async {
+        // database is new, load default values
         if (oldVersion == 0) {
           // https://github.com/tekartik/sembast.dart/blob/master/sembast/doc/open.md#preloading-data
         }
+        // upgrade from v1 to v2
+        if (oldVersion <= 1 && newVersion >= 2) {}
       },
     );
 
