@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_extensionz/flutter_extensionz.dart';
 
-class ContainerTransition extends StatelessWidget {
+class ContainerTransition<T extends Object?> extends StatelessWidget {
   const ContainerTransition({
     super.key,
     required this.closedBuilder,
@@ -15,16 +15,16 @@ class ContainerTransition extends StatelessWidget {
   });
 
   final CloseContainerBuilder closedBuilder;
-  final OpenContainerBuilder openBuilder;
+  final OpenContainerBuilder<T> openBuilder;
   final Color? closedColor;
   final ShapeBorder closedShape;
-  final Function(Object?)? onClosed;
+  final Function(T?)? onClosed;
   final Color? openColor;
   final bool tappable;
 
   @override
   Widget build(BuildContext context) {
-    return OpenContainer(
+    return OpenContainer<T>(
       clipBehavior: Clip.none,
       closedColor: closedColor ?? context.theme.scaffoldBackgroundColor,
       openColor: openColor ?? context.theme.scaffoldBackgroundColor,
