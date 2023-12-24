@@ -18,7 +18,7 @@ class ContainerTransition<T extends Object?> extends StatelessWidget {
   final OpenContainerBuilder<T> openBuilder;
   final Color? closedColor;
   final ShapeBorder closedShape;
-  final Function(T?)? onClosed;
+  final void Function(T?)? onClosed;
   final Color? openColor;
   final bool tappable;
 
