@@ -2,8 +2,8 @@ import 'package:flutter_template/domain/entities/settings.dart';
 import 'package:sembast/sembast.dart';
 
 class SembastSettingsModel extends Settings {
-  SembastSettingsModel({
-    int? id,
+  const SembastSettingsModel({
+    super.id,
     super.needsWelcome,
     super.needsTutorial,
     super.darkMode,
@@ -12,9 +12,8 @@ class SembastSettingsModel extends Settings {
     super.showMaterialGrid,
     super.showPerformanceOverlay,
     super.showSemanticOverlay,
-  }) : super(
-          id: id?.toString(),
-        );
+    super.immersiveMode,
+  });
 
   static const String keyId = 'id';
   static const String keyNeedsWelcome = 'needs_welcome';
@@ -25,10 +24,11 @@ class SembastSettingsModel extends Settings {
   static const String keyShowMaterialGrid = 'show_material_grid';
   static const String keyShowPerformanceOverlay = 'show_performance_overlay';
   static const String keyShowSemanticOverlay = 'show_semantic_overlay';
+  static const String keyImmersiveMode = 'immersive_mode';
 
   factory SembastSettingsModel.fromEntity(Settings settings) {
     return SembastSettingsModel(
-      id: int.tryParse(settings.id),
+      id: settings.id,
       needsWelcome: settings.needsWelcome,
       needsTutorial: settings.needsTutorial,
       darkMode: settings.darkMode,
@@ -37,6 +37,7 @@ class SembastSettingsModel extends Settings {
       showMaterialGrid: settings.showMaterialGrid,
       showPerformanceOverlay: settings.showPerformanceOverlay,
       showSemanticOverlay: settings.showSemanticOverlay,
+      immersiveMode: settings.immersiveMode,
     );
   }
 
@@ -51,6 +52,7 @@ class SembastSettingsModel extends Settings {
       showMaterialGrid: map?[keyShowMaterialGrid] as bool?,
       showPerformanceOverlay: map?[keyShowPerformanceOverlay] as bool?,
       showSemanticOverlay: map?[keyShowSemanticOverlay] as bool?,
+      immersiveMode: map?[keyImmersiveMode] as bool?,
     );
   }
 
@@ -76,6 +78,7 @@ class SembastSettingsModel extends Settings {
       keyShowMaterialGrid: showMaterialGrid,
       keyShowPerformanceOverlay: showPerformanceOverlay,
       keyShowSemanticOverlay: showSemanticOverlay,
+      keyImmersiveMode: immersiveMode,
     };
   }
 }

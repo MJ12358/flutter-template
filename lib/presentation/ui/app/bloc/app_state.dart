@@ -2,12 +2,12 @@ part of 'app_bloc.dart';
 
 enum AppStatus {
   initializing,
-  loading,
   initial,
   success,
   failure,
   authenticated,
   unauthenticated,
+  needsWelcome,
 }
 
 class AppState extends Equatable {

@@ -26,6 +26,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final SetSettingsUseCase _setSettingsUseCase;
   StreamSubscription<Settings>? _settingsSubscription;
 
+  AppStatus _getStatus(Settings settings) {
+    return settings.needsWelcome ? AppStatus.needsWelcome : AppStatus.success;
+  }
+
   Future<void> _onInit(
     AppInitialized event,
     Emitter<AppState> emit,
@@ -41,12 +45,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _settingsSubscription = settingsResult.value?.listen((Settings data) {
       add(AppSettingsChanged(settings: data));
     });
-
-    emit(
-      state.copyWith(
-        status: AppStatus.initial,
-      ),
-    );
   }
 
   void _onFailure(
@@ -67,6 +65,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) {
     emit(
       state.copyWith(
+        status: _getStatus(event.settings),
         settings: event.settings,
       ),
     );

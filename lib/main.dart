@@ -6,6 +6,7 @@ import 'package:flutter_template/bootstrap.dart';
 import 'package:flutter_template/injector.dart';
 import 'package:flutter_template/presentation/extensions/localization_extension.dart';
 import 'package:flutter_template/presentation/ui/app/app.dart';
+import 'package:flutter_template/presentation/ui/welcome/welcome.dart';
 import 'package:flutter_themez/flutter_themez.dart';
 import 'package:flutter_widgetz/flutter_widgetz.dart';
 
@@ -64,6 +65,15 @@ class _MainView extends StatelessWidget {
 
         return MaterialApp(
           navigatorKey: _navigatorKey,
+          builder: (BuildContext context, Widget? child) {
+            return BlocListener<AppBloc, AppState>(
+              listenWhen: (AppState previous, AppState current) {
+                return previous.status != current.status;
+              },
+              listener: _pushPage,
+              child: child,
+            );
+          },
           color: theme.primaryColor,
           debugShowCheckedModeBanner: false,
           debugShowMaterialGrid: state.settings.showMaterialGrid,
@@ -87,10 +97,33 @@ class _MainView extends StatelessWidget {
   Widget _getInitialView(AppState state) {
     switch (state.status) {
       case AppStatus.initializing:
-      case AppStatus.loading:
         return CustomProgressIndicator.circular();
+      case AppStatus.needsWelcome:
+        return const WelcomeView();
       default:
         return const AppView();
+    }
+  }
+
+  // Inspired by:
+  // https://github.com/felangel/bloc/blob/master/examples/flutter_login/lib/app.dart
+  void _pushPage(BuildContext context, AppState state) {
+    switch (state.status) {
+      case AppStatus.authenticated:
+        _navigator.pushAndRemoveUntil(
+          MaterialPageRoute<void>(
+            builder: (_) => const AppView(),
+          ),
+          (_) => false,
+        );
+      case AppStatus.needsWelcome:
+        _navigator.pushAndRemoveUntil(
+          MaterialPageRoute<void>(
+            builder: (_) => const WelcomeView(),
+          ),
+          (_) => false,
+        );
+      default:
     }
   }
 }

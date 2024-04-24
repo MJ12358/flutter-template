@@ -1,6 +1,31 @@
 {
+  "@@locale": "en",
   "appTitle": "flutter_template",
   "@appTitle": {
     "description": "The title of the application"
-  }
+  },
+  "common": "Common",
+  "darkMode": "Dark Mode",
+  "developer": "Developer",
+  "export": "Export",
+  "exportSuccess": "Export Succeeded! Check your downloads.",
+  "immersiveMode": "Immersive Mode",
+  "import": "Import",
+  "legal": "Legal",
+  "materialGrid": "Material Grid",
+  "misc": "Miscellaneous",
+  "performanceOverlay": "Performance Overlay",
+  "primaryColor": "Primary Color",
+  "secondaryColor": "Secondary Color",
+  "semanticOverlay": "Semantic Overlay",
+  "settings": "Settings",
+  "skip": "Skip",
+  "start": "Start",
+  "welcome1Title": "Title 1",
+  "welcome1Description": "Description 1",
+  "welcome2Title": "Title 2",
+  "welcome2Description": "Description 2",
+  "@_SEMANTICS": {},
+  "settingsView": "Settings View",
+  "welcomeView": "Welcome View"
 }

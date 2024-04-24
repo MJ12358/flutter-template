@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "chrome (canvas)",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-d",
+        "chrome",
+        "--web-renderer",
+        "canvaskit",
+        "--web-port=8081"
+      ]
+    },
+    {
+      "name": "chrome (html)",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-d",
+        "chrome",
+        "--web-renderer",
+        "html",
+        "--web-port=8081"
+      ]
+    },
+    {
+      "name": "web-server",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "-d",
+        "web-server",
+        "--web-port=8081",
+        "--web-hostname=0.0.0.0"
+      ],
+    },
+  ]
+}

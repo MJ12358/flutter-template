@@ -29,10 +29,12 @@ if (keystorePropertiesFile.exists()) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+// apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -51,7 +53,7 @@ android {
     defaultConfig {
         applicationId "com.company.flutter_template"
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -72,6 +74,9 @@ android {
 
         release {
           signingConfig signingConfigs.release
+          ndk {
+            debugSymbolLevel 'SYMBOL_TABLE'
+          }
         }
     }
 }
@@ -82,4 +87,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    // implementation 'com.google.firebase:firebase-analytics'
 }

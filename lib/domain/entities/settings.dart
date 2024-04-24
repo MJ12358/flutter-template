@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Settings extends Equatable {
   const Settings({
-    String? id,
+    int? id,
     bool? needsWelcome,
     bool? needsTutorial,
     bool? darkMode,
@@ -11,7 +11,8 @@ class Settings extends Equatable {
     bool? showMaterialGrid,
     bool? showPerformanceOverlay,
     bool? showSemanticOverlay,
-  })  : id = id ?? '0',
+    bool? immersiveMode,
+  })  : id = id ?? 0,
         needsWelcome = needsWelcome ?? true,
         needsTutorial = needsTutorial ?? true,
         darkMode = darkMode ?? false,
@@ -19,9 +20,10 @@ class Settings extends Equatable {
         secondaryColor = secondaryColor ?? 0xFFDE690C,
         showMaterialGrid = showMaterialGrid ?? false,
         showPerformanceOverlay = showPerformanceOverlay ?? false,
-        showSemanticOverlay = showSemanticOverlay ?? false;
+        showSemanticOverlay = showSemanticOverlay ?? false,
+        immersiveMode = immersiveMode ?? false;
 
-  final String id;
+  final int id;
   final bool needsWelcome;
   final bool needsTutorial;
   final bool darkMode;
@@ -30,6 +32,7 @@ class Settings extends Equatable {
   final bool showMaterialGrid;
   final bool showPerformanceOverlay;
   final bool showSemanticOverlay;
+  final bool immersiveMode;
 
   @override
   List<Object> get props => <Object>[
@@ -42,6 +45,7 @@ class Settings extends Equatable {
         showMaterialGrid,
         showPerformanceOverlay,
         showSemanticOverlay,
+        immersiveMode,
       ];
 
   @override
@@ -50,7 +54,7 @@ class Settings extends Equatable {
   }
 
   Settings copyWith({
-    String? id,
+    int? id,
     bool? needsWelcome,
     bool? needsTutorial,
     bool? darkMode,
@@ -59,6 +63,7 @@ class Settings extends Equatable {
     bool? showMaterialGrid,
     bool? showPerformanceOverlay,
     bool? showSemanticOverlay,
+    bool? immersiveMode,
   }) {
     return Settings(
       id: id ?? this.id,
@@ -71,6 +76,7 @@ class Settings extends Equatable {
       showPerformanceOverlay:
           showPerformanceOverlay ?? this.showPerformanceOverlay,
       showSemanticOverlay: showSemanticOverlay ?? this.showSemanticOverlay,
+      immersiveMode: immersiveMode ?? this.immersiveMode,
     );
   }
 }

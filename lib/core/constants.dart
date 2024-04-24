@@ -1,13 +1,17 @@
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:flutter/material.dart' as material;
 
 class Asset {
   Asset._();
 
   /// The launcher asset.
-  static const String launcher = 'assets/images/flutter_logo.png';
+  static const String launcher = 'assets/logos/launcher.png';
 
   /// The splash asset.
-  static const String splash = 'assets/logos/flutter_logo.png';
+  static const String splash = 'assets/logos/splash.png';
+
+  static const String welcome1Image = 'assets/images/welcome/welcome_1.png';
+  static const String welcome2Image = 'assets/images/welcome/welcome_2.png';
 }
 
 class Build {
@@ -21,6 +25,9 @@ class Build {
 
   /// A constant that is true if the application was compiled in profile mode.
   static const bool isProfile = foundation.kProfileMode;
+
+  /// A constant that is true if the application was compiled to run on the web.
+  static const bool isWeb = foundation.kIsWeb;
 }
 
 class Opaque {
@@ -69,4 +76,13 @@ class Style {
   static const double radiusSmall = 4.0;
   static const double radiusMedium = 8.0;
   static const double radiusLarge = 15.0;
+
+  static const material.Color transparent = material.Colors.transparent;
+  static const material.Color black = material.Colors.black;
+  static final material.Color black05 = black.withOpacity(0.05);
+  static final material.Color black15 = black.withOpacity(0.15);
+  static final material.Color black50 = black.withOpacity(0.50);
+  static const material.Color blue = material.Colors.blue;
+  static const material.Color green = material.Colors.green;
+  static const material.Color white = material.Colors.white;
 }

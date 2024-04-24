@@ -10,7 +10,6 @@ class SembastSettingsDataSource implements SettingsDataSource {
   }) : _database = database;
 
   final domain.Database _database;
-
   Database get _db => _database.db as Database;
 
   static const String _storeName = 'settings';
@@ -32,7 +31,6 @@ class SembastSettingsDataSource implements SettingsDataSource {
   }) async {
     final Map<String, Object?> data =
         SembastSettingsModel.fromEntity(settings).toMap();
-
     await _store.record(0).put(_db, data);
   }
 }

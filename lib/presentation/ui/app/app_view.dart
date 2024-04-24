@@ -21,7 +21,7 @@ class AppView extends StatelessWidget {
       },
       child: CustomScaffold(
         appBar: CustomAppBar(
-          titleText: context.l10n.appTitle,
+          title: Text(context.l10n.appTitle),
         ),
         body: Center(
           child: Text(context.l10n.appTitle),

@@ -12,8 +12,8 @@ class FirebaseDatabase implements Database {
     //   options: DefaultFirebaseOptions.currentPlatform,
     // );
 
-    if (Build.isDebug) {
-      await _crashlytics.setCrashlyticsCollectionEnabled(false);
+    if (!Build.isWeb && Build.isDebug) {
+      // await _crashlytics.setCrashlyticsCollectionEnabled(false);
     }
   }
 

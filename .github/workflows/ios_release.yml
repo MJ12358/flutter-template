@@ -1,0 +1,67 @@
+# Creates release when tag pushed or on manual dispatch
+# Create tag:
+#   git tag vX.X.X
+
+name: iOS Release
+
+on:
+  #push:
+  #  branches: ["main"]
+  #  tags:
+  #    - "v[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+
+jobs:
+  #
+  # Build the app bundle
+  #
+  build:
+    name: Build App Bundle
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Flutter action needs java so include it
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "12.x"
+
+      # Include the Flutter action
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.13.9"
+          channel: "stable"
+
+      # Read pubspec for version number
+      - name: Run read-yaml action
+        id: version
+        uses: KJ002/read-yaml@main
+        with:
+          file: "./pubspec.yaml"
+          key-path: '["version"]'
+
+      # Get Dependencies
+      - name: Get Dependencies
+        run: flutter pub get
+
+      # Update pods
+      - name: Update Pods
+        run: pod repo update
+
+      # Run Tests
+      - name: Run Tests
+        run: flutter test
+
+      # Run Flutter build
+      - name: Start Release Build
+        run: flutter build ipa
+
+      # Create a release in GitHub
+      - name: Create a Release in GitHub
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/ios/ipa/*.ipa"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ steps.version.outputs.data }}
+          commit: ${{ github.sha }}
