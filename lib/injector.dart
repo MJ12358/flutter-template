@@ -48,6 +48,7 @@ import 'package:get_it/get_it.dart';
 
 class Injector {
   Injector._();
+
   static final GetIt sl = GetIt.instance;
   static const String local = 'local';
   static const String remote = 'remote';

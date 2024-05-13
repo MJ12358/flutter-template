@@ -4,6 +4,7 @@
   "@appTitle": {
     "description": "The title of the application"
   },
+  "areYouSureImport": "Are you sure you want to import?\nDoing so will overwrite your existing data.",
   "common": "Common",
   "darkMode": "Dark Mode",
   "developer": "Developer",

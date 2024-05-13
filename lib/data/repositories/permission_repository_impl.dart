@@ -1,4 +1,6 @@
-import 'package:flutter_template/domain/exceptions/permission_denied_exception.dart';
+import 'package:dart_extensionz/dart_extensionz.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_template/domain/exceptions/permission_exception.dart';
 import 'package:flutter_template/domain/repositories/permission_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -18,9 +20,19 @@ class PermissionRepositoryImpl implements PermissionRepository {
   }
 
   @override
-  Future<void> requestStorage() {
+  Future<void> requestStorage() async {
     const Permission permission = Permission.storage;
-    return _grant(permission);
+
+    switch (PlatformExtension.target) {
+      // android is special
+      case TargetPlatform.android:
+        final AndroidDeviceInfo info = await DeviceInfoPlugin().androidInfo;
+        if (info.version.sdkInt < 33) {
+          return _grant(permission);
+        }
+      default:
+        return _grant(permission);
+    }
   }
 
   Future<void> _grant(Permission permission) async {

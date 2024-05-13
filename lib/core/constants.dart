@@ -86,3 +86,12 @@ class Style {
   static const material.Color green = material.Colors.green;
   static const material.Color white = material.Colors.white;
 }
+
+class Url {
+  Url._();
+  static const String website = 'https://www.example.com';
+  static const String privacyPolicy = 'https://www.example.com/#/privacy';
+  static const String youtube =
+      'https://www.youtube.com/@flutter_template/featured';
+  static const String facebook = 'https://www.facebook.com/flutter_template';
+}
