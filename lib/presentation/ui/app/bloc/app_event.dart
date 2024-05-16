@@ -1,17 +1,17 @@
 part of 'app_bloc.dart';
 
-abstract class AppEvent extends Equatable {
+sealed class AppEvent extends Equatable {
   const AppEvent();
 
   @override
   List<Object> get props => <Object>[];
 }
 
-class AppInitialized extends AppEvent {
+final class AppInitialized extends AppEvent {
   const AppInitialized();
 }
 
-class AppFailed extends AppEvent {
+final class AppFailed extends AppEvent {
   const AppFailed({
     required this.message,
   });
@@ -24,7 +24,7 @@ class AppFailed extends AppEvent {
       ];
 }
 
-class AppSettingsChanged extends AppEvent {
+final class AppSettingsChanged extends AppEvent {
   const AppSettingsChanged({
     required this.settings,
   });
@@ -37,6 +37,6 @@ class AppSettingsChanged extends AppEvent {
       ];
 }
 
-class AppTutorialCompleted extends AppEvent {
+final class AppTutorialCompleted extends AppEvent {
   const AppTutorialCompleted();
 }

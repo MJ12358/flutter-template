@@ -11,7 +11,7 @@ enum SettingsStatus {
   importSuccess,
 }
 
-class SettingsState extends Equatable {
+final class SettingsState extends Equatable {
   const SettingsState({
     this.settings = const Settings(),
     this.status = SettingsStatus.loading,

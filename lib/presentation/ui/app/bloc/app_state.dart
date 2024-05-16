@@ -10,7 +10,7 @@ enum AppStatus {
   needsWelcome,
 }
 
-class AppState extends Equatable {
+final class AppState extends Equatable {
   const AppState({
     this.settings = const Settings(),
     this.status = AppStatus.initializing,

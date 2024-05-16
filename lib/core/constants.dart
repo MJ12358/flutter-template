@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart' as material;
 
-class Asset {
+final class Asset {
   Asset._();
 
   /// The launcher asset.
@@ -14,7 +14,7 @@ class Asset {
   static const String welcome2Image = 'assets/images/welcome/welcome_2.png';
 }
 
-class Build {
+final class Build {
   Build._();
 
   /// A constant that is true if the application was compiled in debug mode.
@@ -30,7 +30,7 @@ class Build {
   static const bool isWeb = foundation.kIsWeb;
 }
 
-class Opaque {
+final class Opaque {
   Opaque._();
 
   /// A constant depicting a "full" opacity.
@@ -46,7 +46,7 @@ class Opaque {
   static double get threeQuarter => full * 0.75;
 }
 
-class Period {
+final class Period {
   Period._();
 
   /// A constant depicting a "full" period in milliseconds.
@@ -62,7 +62,7 @@ class Period {
   static int get duplex => (full * 2.0).toInt();
 }
 
-class Style {
+final class Style {
   Style._();
 
   static const double letterSpacingSmall = 0.75;
@@ -92,7 +92,7 @@ class Style {
   static const material.Color blue = material.Colors.blue;
 }
 
-class Url {
+final class Url {
   Url._();
 
   static const String website = 'https://www.example.com';

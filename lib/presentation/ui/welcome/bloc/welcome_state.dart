@@ -8,7 +8,7 @@ enum WelcomeStatus {
   complete,
 }
 
-class WelcomeState extends Equatable {
+final class WelcomeState extends Equatable {
   const WelcomeState({
     this.settings = const Settings(),
     this.status = WelcomeStatus.loading,

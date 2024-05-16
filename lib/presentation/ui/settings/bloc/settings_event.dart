@@ -1,17 +1,17 @@
 part of 'settings_bloc.dart';
 
-abstract class SettingsEvent extends Equatable {
+sealed class SettingsEvent extends Equatable {
   const SettingsEvent();
 
   @override
   List<Object> get props => <Object>[];
 }
 
-class SettingsInitialized extends SettingsEvent {
+final class SettingsInitialized extends SettingsEvent {
   const SettingsInitialized();
 }
 
-class SettingsFailed extends SettingsEvent {
+final class SettingsFailed extends SettingsEvent {
   const SettingsFailed({
     required this.message,
   });
@@ -24,7 +24,7 @@ class SettingsFailed extends SettingsEvent {
       ];
 }
 
-class SettingsChanged extends SettingsEvent {
+final class SettingsChanged extends SettingsEvent {
   const SettingsChanged({
     required this.settings,
   });
@@ -37,7 +37,7 @@ class SettingsChanged extends SettingsEvent {
       ];
 }
 
-class SettingsDarkModeChanged extends SettingsEvent {
+final class SettingsDarkModeChanged extends SettingsEvent {
   const SettingsDarkModeChanged({
     required this.darkMode,
   });
@@ -50,7 +50,7 @@ class SettingsDarkModeChanged extends SettingsEvent {
       ];
 }
 
-class SettingsPrimaryColorChanged extends SettingsEvent {
+final class SettingsPrimaryColorChanged extends SettingsEvent {
   const SettingsPrimaryColorChanged({
     required this.color,
   });
@@ -63,7 +63,7 @@ class SettingsPrimaryColorChanged extends SettingsEvent {
       ];
 }
 
-class SettingsSecondaryColorChanged extends SettingsEvent {
+final class SettingsSecondaryColorChanged extends SettingsEvent {
   const SettingsSecondaryColorChanged({
     required this.color,
   });
@@ -76,7 +76,7 @@ class SettingsSecondaryColorChanged extends SettingsEvent {
       ];
 }
 
-class SettingsMaterialGridChanged extends SettingsEvent {
+final class SettingsMaterialGridChanged extends SettingsEvent {
   const SettingsMaterialGridChanged({
     required this.showMaterialGrid,
   });
@@ -89,7 +89,7 @@ class SettingsMaterialGridChanged extends SettingsEvent {
       ];
 }
 
-class SettingsPerformanceOverlayChanged extends SettingsEvent {
+final class SettingsPerformanceOverlayChanged extends SettingsEvent {
   const SettingsPerformanceOverlayChanged({
     required this.showPerformanceOverlay,
   });
@@ -102,7 +102,7 @@ class SettingsPerformanceOverlayChanged extends SettingsEvent {
       ];
 }
 
-class SettingsImmersiveModeChanged extends SettingsEvent {
+final class SettingsImmersiveModeChanged extends SettingsEvent {
   const SettingsImmersiveModeChanged({
     required this.immersiveMode,
   });
@@ -115,7 +115,7 @@ class SettingsImmersiveModeChanged extends SettingsEvent {
       ];
 }
 
-class SettingsSemanticOverlayChanged extends SettingsEvent {
+final class SettingsSemanticOverlayChanged extends SettingsEvent {
   const SettingsSemanticOverlayChanged({
     required this.showSemanticOverlay,
   });
@@ -128,10 +128,10 @@ class SettingsSemanticOverlayChanged extends SettingsEvent {
       ];
 }
 
-class SettingsExportPressed extends SettingsEvent {
+final class SettingsExportPressed extends SettingsEvent {
   const SettingsExportPressed();
 }
 
-class SettingsImportPressed extends SettingsEvent {
+final class SettingsImportPressed extends SettingsEvent {
   const SettingsImportPressed();
 }
