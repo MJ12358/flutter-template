@@ -64,6 +64,7 @@ class Period {
 
 class Style {
   Style._();
+
   static const double letterSpacingSmall = 0.75;
   static const double letterSpacingMedium = 1.25;
   static const double letterSpacingLarge = 1.50;
@@ -77,18 +78,23 @@ class Style {
   static const double radiusMedium = 8.0;
   static const double radiusLarge = 15.0;
 
+  static const int primaryColor = 0xFF2196F3;
+  static const int secondaryColor = 0xFFDE690C;
+
   static const material.Color transparent = material.Colors.transparent;
   static const material.Color black = material.Colors.black;
   static final material.Color black05 = black.withOpacity(0.05);
   static final material.Color black15 = black.withOpacity(0.15);
   static final material.Color black50 = black.withOpacity(0.50);
-  static const material.Color blue = material.Colors.blue;
-  static const material.Color green = material.Colors.green;
   static const material.Color white = material.Colors.white;
+  static const material.Color red = material.Colors.red;
+  static const material.Color green = material.Colors.green;
+  static const material.Color blue = material.Colors.blue;
 }
 
 class Url {
   Url._();
+
   static const String website = 'https://www.example.com';
   static const String privacyPolicy = 'https://www.example.com/#/privacy';
   static const String youtube =

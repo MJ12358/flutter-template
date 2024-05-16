@@ -5,7 +5,7 @@ import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter_template/domain/datasources/file_datasource.dart';
 import 'package:flutter_template/domain/enums/file.dart';
-import 'package:flutter_template/domain/exceptions/platform_not_supported_exception.dart';
+import 'package:flutter_template/domain/exceptions/platform_exception.dart';
 import 'package:flutter_template/domain/repositories/file_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -96,7 +96,7 @@ class FileRepositoryImpl implements FileRepository {
       case TargetPlatform.windows:
         directory = await _windowsDataSource.applicationDirectory;
       default:
-        throw PlatformNotSupportedException();
+        throw PlatformException.notSupported();
     }
     final File file = File('${directory.path}/$name');
     file.write(value);
@@ -118,7 +118,7 @@ class FileRepositoryImpl implements FileRepository {
       case TargetPlatform.windows:
         directory = await _windowsDataSource.downloadDirectory;
       default:
-        throw PlatformNotSupportedException();
+        throw PlatformException.notSupported();
     }
     final File file = File('${directory.path}/$name');
     file.write(value);

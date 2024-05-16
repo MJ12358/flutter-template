@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:flutter_template/domain/datasources/network_datasource.dart';
-import 'package:flutter_template/domain/exceptions/platform_not_supported_exception.dart';
+import 'package:flutter_template/domain/exceptions/platform_exception.dart';
 import 'package:flutter_template/domain/repositories/network_repository.dart';
 
 class NetworkRepositoryImpl implements NetworkRepository {
@@ -33,7 +33,7 @@ class NetworkRepositoryImpl implements NetworkRepository {
       case TargetPlatform.windows:
         return _isConnected(_windowsDataSource);
       default:
-        throw PlatformNotSupportedException();
+        throw PlatformException.notSupported();
     }
   }
 
@@ -41,8 +41,9 @@ class NetworkRepositoryImpl implements NetworkRepository {
     try {
       if (await _hasConnectivity()) {
         return dataSource.hasInternet();
+      } else {
+        return false;
       }
-      return false;
     } catch (_) {
       return false;
     }

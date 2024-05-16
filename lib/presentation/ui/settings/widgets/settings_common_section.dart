@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/domain/entities/settings.dart';
+import 'package:flutter_template/core/constants.dart';
 import 'package:flutter_template/presentation/extensions/localization_extension.dart';
 import 'package:flutter_template/presentation/ui/settings/settings.dart';
 import 'package:flutter_widgetz/flutter_widgetz.dart';
@@ -52,8 +52,6 @@ class _PrimaryColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int defaultColor = const Settings().primaryColor;
-
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: (SettingsState previous, SettingsState current) {
         return previous.settings.primaryColor != current.settings.primaryColor;
@@ -62,7 +60,7 @@ class _PrimaryColor extends StatelessWidget {
         return SettingsTile.colorPicker(
           context: context,
           color: Color(state.settings.primaryColor),
-          defaultColor: Color(defaultColor),
+          defaultColor: const Color(Style.primaryColor),
           title: Text(context.l10n.primaryColor),
           onChanged: (Color color) => context
               .read<SettingsBloc>()
@@ -78,8 +76,6 @@ class _SecondaryColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int defaultColor = const Settings().secondaryColor;
-
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: (SettingsState previous, SettingsState current) {
         return previous.settings.secondaryColor !=
@@ -89,7 +85,7 @@ class _SecondaryColor extends StatelessWidget {
         return SettingsTile.colorPicker(
           context: context,
           color: Color(state.settings.secondaryColor),
-          defaultColor: Color(defaultColor),
+          defaultColor: const Color(Style.secondaryColor),
           title: Text(context.l10n.secondaryColor),
           onChanged: (Color color) => context
               .read<SettingsBloc>()

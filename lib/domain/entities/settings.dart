@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_template/core/constants.dart';
 
 class Settings extends Equatable {
   const Settings({
@@ -16,8 +17,8 @@ class Settings extends Equatable {
         needsWelcome = needsWelcome ?? true,
         needsTutorial = needsTutorial ?? true,
         darkMode = darkMode ?? false,
-        primaryColor = primaryColor ?? 0xFF2196F3,
-        secondaryColor = secondaryColor ?? 0xFFDE690C,
+        primaryColor = primaryColor ?? Style.primaryColor,
+        secondaryColor = secondaryColor ?? Style.secondaryColor,
         showMaterialGrid = showMaterialGrid ?? false,
         showPerformanceOverlay = showPerformanceOverlay ?? false,
         showSemanticOverlay = showSemanticOverlay ?? false,

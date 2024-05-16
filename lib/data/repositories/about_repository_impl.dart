@@ -2,7 +2,7 @@ import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:flutter_template/core/constants.dart';
 import 'package:flutter_template/domain/datasources/about_datasource.dart';
 import 'package:flutter_template/domain/entities/about.dart';
-import 'package:flutter_template/domain/exceptions/platform_not_supported_exception.dart';
+import 'package:flutter_template/domain/exceptions/platform_exception.dart';
 import 'package:flutter_template/domain/repositories/about_repository.dart';
 
 class AboutRepositoryImpl implements AboutRepository {
@@ -41,7 +41,7 @@ class AboutRepositoryImpl implements AboutRepository {
       case TargetPlatform.windows:
         return _windowsDataSource.get();
       default:
-        throw PlatformNotSupportedException();
+        throw PlatformException.notSupported();
     }
   }
 }
