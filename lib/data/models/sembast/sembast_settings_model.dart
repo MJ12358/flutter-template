@@ -13,6 +13,7 @@ class SembastSettingsModel extends Settings {
     super.showPerformanceOverlay,
     super.showSemanticOverlay,
     super.immersiveMode,
+    super.analytics,
   });
 
   static const String keyId = 'id';
@@ -25,6 +26,7 @@ class SembastSettingsModel extends Settings {
   static const String keyShowPerformanceOverlay = 'show_performance_overlay';
   static const String keyShowSemanticOverlay = 'show_semantic_overlay';
   static const String keyImmersiveMode = 'immersive_mode';
+  static const String keyAnalytics = 'analytics';
 
   factory SembastSettingsModel.fromEntity(Settings settings) {
     return SembastSettingsModel(
@@ -38,6 +40,7 @@ class SembastSettingsModel extends Settings {
       showPerformanceOverlay: settings.showPerformanceOverlay,
       showSemanticOverlay: settings.showSemanticOverlay,
       immersiveMode: settings.immersiveMode,
+      analytics: settings.analytics,
     );
   }
 
@@ -53,6 +56,7 @@ class SembastSettingsModel extends Settings {
       showPerformanceOverlay: map?[keyShowPerformanceOverlay] as bool?,
       showSemanticOverlay: map?[keyShowSemanticOverlay] as bool?,
       immersiveMode: map?[keyImmersiveMode] as bool?,
+      analytics: map?[keyAnalytics] as bool?,
     );
   }
 
@@ -79,6 +83,7 @@ class SembastSettingsModel extends Settings {
       keyShowPerformanceOverlay: showPerformanceOverlay,
       keyShowSemanticOverlay: showSemanticOverlay,
       keyImmersiveMode: immersiveMode,
+      keyAnalytics: analytics,
     };
   }
 }

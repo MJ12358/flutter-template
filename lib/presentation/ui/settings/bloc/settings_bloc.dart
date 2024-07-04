@@ -32,6 +32,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<SettingsPerformanceOverlayChanged>(_onPerformanceOverlayChanged);
     on<SettingsImmersiveModeChanged>(_onImmersiveModeChanged);
     on<SettingsSemanticOverlayChanged>(_onSemanticOverlayChanged);
+    on<SettingsAnalyticsChanged>(_onAnalyticsChanged);
     on<SettingsExportPressed>(_onExport);
     on<SettingsImportPressed>(_onImport);
   }
@@ -51,12 +52,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
     if (result.hasError) {
       add(SettingsFailed(message: result.errorMessage!));
-      return;
+    } else {
+      _streamSubscription = result.value?.listen((Settings data) {
+        add(SettingsChanged(settings: data));
+      });
     }
-
-    _streamSubscription = result.value?.listen((Settings data) {
-      add(SettingsChanged(settings: data));
-    });
   }
 
   void _onFailure(
@@ -202,6 +202,23 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     }
   }
 
+  Future<void> _onAnalyticsChanged(
+    SettingsAnalyticsChanged event,
+    Emitter<SettingsState> emit,
+  ) async {
+    final SetSettingsResult result = await _setSettingsUseCase(
+      SetSettingsParams(
+        settings: state.settings.copyWith(
+          analytics: event.analytics,
+        ),
+      ),
+    );
+
+    if (result.hasError) {
+      add(SettingsFailed(message: result.errorMessage!));
+    }
+  }
+
   Future<void> _onExport(
     SettingsExportPressed event,
     Emitter<SettingsState> emit,
@@ -216,14 +233,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
     if (result.hasError) {
       add(SettingsFailed(message: result.errorMessage!));
-      return;
+    } else {
+      emit(
+        state.copyWith(
+          status: SettingsStatus.exportSuccess,
+        ),
+      );
     }
-
-    emit(
-      state.copyWith(
-        status: SettingsStatus.exportSuccess,
-      ),
-    );
   }
 
   Future<void> _onImport(
@@ -240,14 +256,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
     if (result.hasError) {
       add(SettingsFailed(message: result.errorMessage!));
-      return;
+    } else {
+      emit(
+        state.copyWith(
+          status: SettingsStatus.importSuccess,
+        ),
+      );
     }
-
-    emit(
-      state.copyWith(
-        status: SettingsStatus.importSuccess,
-      ),
-    );
   }
 
   @override

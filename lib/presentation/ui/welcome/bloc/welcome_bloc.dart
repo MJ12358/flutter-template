@@ -31,17 +31,15 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
 
     if (result.hasError) {
       add(WelcomeFailed(message: result.errorMessage!));
-      return;
+    } else {
+      final Settings? settings = await result.value?.first;
+      emit(
+        state.copyWith(
+          status: WelcomeStatus.initial,
+          settings: settings,
+        ),
+      );
     }
-
-    final Settings? settings = await result.value?.first;
-
-    emit(
-      state.copyWith(
-        status: WelcomeStatus.initial,
-        settings: settings,
-      ),
-    );
   }
 
   void _onFailure(
@@ -70,13 +68,12 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
 
     if (result.hasError) {
       add(WelcomeFailed(message: result.errorMessage!));
-      return;
+    } else {
+      emit(
+        state.copyWith(
+          status: WelcomeStatus.complete,
+        ),
+      );
     }
-
-    emit(
-      state.copyWith(
-        status: WelcomeStatus.complete,
-      ),
-    );
   }
 }

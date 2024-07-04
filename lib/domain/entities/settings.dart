@@ -13,6 +13,7 @@ class Settings extends Equatable {
     bool? showPerformanceOverlay,
     bool? showSemanticOverlay,
     bool? immersiveMode,
+    bool? analytics,
   })  : id = id ?? 0,
         needsWelcome = needsWelcome ?? true,
         needsTutorial = needsTutorial ?? true,
@@ -22,7 +23,8 @@ class Settings extends Equatable {
         showMaterialGrid = showMaterialGrid ?? false,
         showPerformanceOverlay = showPerformanceOverlay ?? false,
         showSemanticOverlay = showSemanticOverlay ?? false,
-        immersiveMode = immersiveMode ?? false;
+        immersiveMode = immersiveMode ?? false,
+        analytics = analytics ?? true;
 
   final int id;
   final bool needsWelcome;
@@ -34,6 +36,7 @@ class Settings extends Equatable {
   final bool showPerformanceOverlay;
   final bool showSemanticOverlay;
   final bool immersiveMode;
+  final bool analytics;
 
   @override
   List<Object> get props => <Object>[
@@ -47,6 +50,7 @@ class Settings extends Equatable {
         showPerformanceOverlay,
         showSemanticOverlay,
         immersiveMode,
+        analytics,
       ];
 
   @override
@@ -65,6 +69,7 @@ class Settings extends Equatable {
     bool? showPerformanceOverlay,
     bool? showSemanticOverlay,
     bool? immersiveMode,
+    bool? analytics,
   }) {
     return Settings(
       id: id ?? this.id,
@@ -78,6 +83,7 @@ class Settings extends Equatable {
           showPerformanceOverlay ?? this.showPerformanceOverlay,
       showSemanticOverlay: showSemanticOverlay ?? this.showSemanticOverlay,
       immersiveMode: immersiveMode ?? this.immersiveMode,
+      analytics: analytics ?? this.analytics,
     );
   }
 }

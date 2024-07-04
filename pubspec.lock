@@ -93,10 +93,10 @@ packages:
     dependency: "direct dev"
     description:
       name: change_app_package_name
-      sha256: f9ebaf68a4b5a68c581492579bb68273c523ef325fbf9ce2f1b57fb136ad023b
+      sha256: "494e7943d4e8ba6a70970bf0fac293c866a121c50096dc9e027565bfbfc5c7a1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   characters:
     dependency: transitive
     description:
@@ -205,10 +205,10 @@ packages:
     dependency: "direct main"
     description:
       name: dart_extensionz
-      sha256: a54b4f04770c79ef99f98b8e8a55002885cdc383f6d81313f52abc7bfd8d09e1
+      sha256: "17b3d1f902b9a4fd55e478234458c52bba483fbd366855b2e490bc3b1c7b94f6"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "6.3.2"
   dart_lintz:
     dependency: "direct dev"
     description:
@@ -411,10 +411,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_extensionz
-      sha256: "923366884c6db14e5db0bfe205ed52fcee6f954a9444eff6730e8719ca8e77a6"
+      sha256: "9fd6dabe9ef730f77db74f9cfe95bdca09398ec6660dca0f85f1a2faaec0ea8c"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.2.2"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -466,10 +466,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_widgetz
-      sha256: ac4b39483446e1c12f865606d49b2f9e5c0e1c059c9e7a7461e691664d24e0e6
+      sha256: e9d04192b4b9cbd62c2a41dd7983a4cc4ffa7a5a53f9a07148be1efa8a228e2c
       url: "https://pub.dev"
     source: hosted
-    version: "9.5.1"
+    version: "9.7.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -546,10 +546,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: "26222b01a0c9a2c8fe02fc90b8208bd3325da5ed1f4a2acabf75939031ac0bdd"
+      sha256: "1f498d086203360cca099d20ffea2963f48c39ce91bdd8a3b6d4a045786b02c8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.0.8"
   image_picker_android:
     dependency: transitive
     description:

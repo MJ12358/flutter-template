@@ -128,6 +128,19 @@ final class SettingsSemanticOverlayChanged extends SettingsEvent {
       ];
 }
 
+final class SettingsAnalyticsChanged extends SettingsEvent {
+  const SettingsAnalyticsChanged({
+    required this.analytics,
+  });
+
+  final bool analytics;
+
+  @override
+  List<Object> get props => <Object>[
+        analytics,
+      ];
+}
+
 final class SettingsExportPressed extends SettingsEvent {
   const SettingsExportPressed();
 }

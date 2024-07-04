@@ -73,13 +73,13 @@ class Injector {
     ///
     /// Used to initialized any databases.
 
-    sl.registerLazySingleton<Database>(
-      SembastDatabase.new,
+    sl.registerSingletonAsync<Database>(
+      () => SembastDatabase().init(),
       instanceName: local,
     );
 
-    sl.registerLazySingleton<Database>(
-      FirebaseDatabase.new,
+    sl.registerSingletonAsync<Database>(
+      () => FirebaseDatabase().init(),
       instanceName: remote,
     );
 
@@ -168,6 +168,7 @@ class Injector {
       () => AnalyticsRepositoryImpl(
         remoteDataSource: sl(instanceName: remote),
         webDataSource: sl(instanceName: web),
+        settingsRepository: sl(),
       ),
     );
 

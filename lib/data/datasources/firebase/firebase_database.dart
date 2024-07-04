@@ -6,7 +6,7 @@ class FirebaseDatabase implements Database {
   FirebaseCrashlytics get _crashlytics => FirebaseCrashlytics.instance;
 
   @override
-  Future<void> init() async {
+  Future<Database> init() async {
     // TODO: initialize Firebase via "flutterfire configure"
     // await Firebase.initializeApp(
     //   options: DefaultFirebaseOptions.currentPlatform,
@@ -15,6 +15,8 @@ class FirebaseDatabase implements Database {
     if (!Build.isWeb && Build.isDebug) {
       // await _crashlytics.setCrashlyticsCollectionEnabled(false);
     }
+
+    return this;
   }
 
   @override

@@ -35,7 +35,7 @@ class SembastDatabase implements domain.Database {
   }
 
   @override
-  Future<void> init() async {
+  Future<domain.Database> init() async {
     disableSembastCooperator();
 
     _db = await _dbFactory.openDatabase(
@@ -52,6 +52,8 @@ class SembastDatabase implements domain.Database {
     );
 
     enableSembastCooperator();
+
+    return this;
   }
 
   @override

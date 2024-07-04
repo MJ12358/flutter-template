@@ -11,7 +11,10 @@ import 'package:flutter_themez/flutter_themez.dart';
 import 'package:flutter_widgetz/flutter_widgetz.dart';
 
 void main() async {
+  final WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: binding);
   await Injector.init();
+  await Injector.sl.allReady();
   await Injector.sl<Bootstrap>().call(_Main.new);
 }
 

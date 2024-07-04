@@ -3,7 +3,7 @@
 //  b: to keep main.dart free of database specifics
 
 abstract class Database {
-  Future<void> init();
+  Future<Database> init();
   Object get db;
   Future<String> export();
   Future<void> import({
