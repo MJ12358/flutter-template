@@ -15,7 +15,6 @@ class SettingsMiscSection extends StatelessWidget {
       tiles: const <Widget>[
         _Import(),
         _Export(),
-        _Analytics(),
       ],
     );
   }
@@ -66,31 +65,6 @@ class _Export extends StatelessWidget {
               : null,
           onTap: () =>
               context.read<SettingsBloc>().add(const SettingsExportPressed()),
-        );
-      },
-    );
-  }
-}
-
-class _Analytics extends StatelessWidget {
-  const _Analytics();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SettingsBloc, SettingsState>(
-      buildWhen: (SettingsState previous, SettingsState current) {
-        return previous.settings.analytics != current.settings.analytics;
-      },
-      builder: (BuildContext context, SettingsState state) {
-        return SettingsTile.switched(
-          title: Text(context.l10n.analytics),
-          leading: const Icon(Icons.analytics_outlined),
-          value: state.settings.analytics,
-          onChanged: (bool value) => context.read<SettingsBloc>().add(
-                SettingsAnalyticsChanged(
-                  analytics: value,
-                ),
-              ),
         );
       },
     );
