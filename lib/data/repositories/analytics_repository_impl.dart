@@ -30,7 +30,6 @@ class AnalyticsRepositoryImpl implements AnalyticsRepository {
     StackTrace? stackTrace,
   }) {
     if (!_settings.analytics) {
-      log('analytics disabled');
       return;
     }
     try {

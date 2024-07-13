@@ -119,6 +119,7 @@ class Injector {
 
     sl.registerLazySingleton<ExportUseCase>(
       () => ExportUseCaseImpl(
+        aboutRepository: sl(),
         analyticsRepository: sl(),
         fileRepository: sl(),
         permissionRepository: sl(),

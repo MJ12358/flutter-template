@@ -27,10 +27,13 @@ class ImportUseCaseImpl implements ImportUseCase {
       final Uint8List? data = await _fileRepository.pick();
 
       if (data == null) {
+        // TODO: localize this
         throw CustomException('You canceled the import.');
       }
 
-      await _porterRepository.import(data: String.fromCharCodes(data));
+      await _porterRepository.import(
+        data: String.fromCharCodes(data),
+      );
 
       return const ImportResult();
     } catch (e, s) {

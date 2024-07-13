@@ -21,7 +21,9 @@ class PickFileUseCaseImpl implements PickFileUseCase {
   @override
   Future<PickFileResult> call(PickFileParams params) async {
     try {
-      final Uint8List? file = await _fileRepository.pick(source: params.source);
+      final Uint8List? file = await _fileRepository.pick(
+        source: params.source,
+      );
       return PickFileResult(
         value: file,
       );
