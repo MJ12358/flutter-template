@@ -38,22 +38,38 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 
 This project includes [change_app_package_name](https://pub.dev/packages/change_app_package_name) and [flutter_app_name](https://pub.dev/packages/flutter_app_name) to aid in changing the app/package name.
 
-First modify `pubspec.yaml` `name` and `flutter_app_name`.
+First modify `pubspec.yaml`:
+
+```yml
+name: <your_app_name>
+
+flutter_app_name:
+  name: <your_app_name>
+```
 
 Then run:
 
 ```bash
 dart run flutter_app_name
+```
+
+```bash
 dart run change_app_package_name:main com.company.myappname
 ```
 
-You can then use find an replace to switch any import references from the old name to the new one.
+You can then use `find and replace` (via your favorite editor) to modify any import references from the old name to the new one.
 
 ## Changing Launcher Icons
 
 This project includes [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons) to aid in generating the necessary icons.
 
-First determine which icon you want to use. Place it into the `assets` folder and modify the `flutter_launcher_icons.yaml` file to fit your needs.
+First determine which icon you want to use. Place it into the `assets` folder and modify the `pubspec.yaml` file to fit your needs.
+
+```yml
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/logos/launcher.png"
+```
 
 Then run:
 
@@ -65,7 +81,13 @@ dart run flutter_launcher_icons:main
 
 This project includes [flutter_native_splash](https://pub.dev/packages/flutter_native_splash) to aid in generating the necessary images.
 
-First determine which image you want to use. Place it into the `assets` folder and modify the `flutter_native_splash.yaml` file to fit your needs.
+First determine which image you want to use. Place it into the `assets` folder and modify the `pubspec.yaml` file to fit your needs.
+
+```yml
+flutter_native_splash:
+  android: true
+  image: assets/logos/splash.png
+```
 
 Then run:
 
@@ -104,3 +126,10 @@ First you must build the app, then the signing report will become available.
 cd android
 gradlew signingReport
 ```
+
+## Widgets (optional)
+
+There are some widgets shipped with this template that you may want to rename.
+
+- `FlutterTemplateBottomNavigation`
+- `FlutterTemplateSideNavigation`
