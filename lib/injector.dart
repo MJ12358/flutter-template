@@ -37,6 +37,7 @@ import 'package:flutter_template/domain/repositories/network_repository.dart';
 import 'package:flutter_template/domain/repositories/permission_repository.dart';
 import 'package:flutter_template/domain/repositories/porter_repository.dart';
 import 'package:flutter_template/domain/repositories/settings_repository.dart';
+import 'package:flutter_template/domain/usecases/files/pick_file_usecase.dart';
 import 'package:flutter_template/domain/usecases/porter/export_usecase.dart';
 import 'package:flutter_template/domain/usecases/porter/import_usecase.dart';
 import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
@@ -114,6 +115,15 @@ class Injector {
     /// Use Case Registration
     ///
     ///
+
+    // files
+
+    sl.registerLazySingleton<PickFileUseCase>(
+      () => PickFileUseCaseImpl(
+        analyticsRepository: sl(),
+        fileRepository: sl(),
+      ),
+    );
 
     // porter
 
