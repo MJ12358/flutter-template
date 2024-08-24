@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_extensionz/flutter_extensionz.dart';
-import 'package:flutter_template/core/constants.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/welcome/welcome.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of '../welcome.dart';
 
 class WelcomeBody extends StatelessWidget {
   const WelcomeBody({super.key});
@@ -23,8 +17,7 @@ class WelcomeBody extends StatelessWidget {
         return Welcome(
           skip: Text(context.l10n.skip),
           start: Text(context.l10n.start),
-          onCompleted: () =>
-              context.read<WelcomeBloc>().add(const WelcomeCompleted()),
+          onCompleted: () => context.read<WelcomeBloc>().onComplete(),
           pages: <Widget>[
             WelcomeContent(
               asset: Asset.welcome1Image,

@@ -1,267 +1,174 @@
-import 'dart:async';
+part of '../settings.dart';
 
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_template/domain/entities/settings.dart';
-import 'package:flutter_template/domain/usecases/porter/export_usecase.dart';
-import 'package:flutter_template/domain/usecases/porter/import_usecase.dart';
-import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
-import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
-
-part 'settings_event.dart';
-part 'settings_state.dart';
-
-class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
+class SettingsBloc extends Cubit<SettingsState> {
   SettingsBloc({
-    required GetSettingsUseCase getSettingsUseCase,
-    required SetSettingsUseCase setSettingsUseCase,
-    required ExportUseCase exportUseCase,
-    required ImportUseCase importUseCase,
-  })  : _getSettingsUseCase = getSettingsUseCase,
-        _setSettingsUseCase = setSettingsUseCase,
-        _exportUseCase = exportUseCase,
-        _importUseCase = importUseCase,
-        super(const SettingsState()) {
-    on<SettingsInitialized>(_onInit);
-    on<SettingsFailed>(_onFailure);
-    on<SettingsChanged>(_onChanged);
-    on<SettingsDarkModeChanged>(_onDarkModeChanged);
-    on<SettingsPrimaryColorChanged>(_onPrimaryColorChanged);
-    on<SettingsSecondaryColorChanged>(_onSecondaryColorChanged);
-    on<SettingsMaterialGridChanged>(_onMaterialGridChanged);
-    on<SettingsPerformanceOverlayChanged>(_onPerformanceOverlayChanged);
-    on<SettingsImmersiveModeChanged>(_onImmersiveModeChanged);
-    on<SettingsSemanticOverlayChanged>(_onSemanticOverlayChanged);
-    on<SettingsAnalyticsChanged>(_onAnalyticsChanged);
-    on<SettingsExportPressed>(_onExport);
-    on<SettingsImportPressed>(_onImport);
-  }
+    required AboutRepository aboutRepository,
+    required FileRepository fileRepository,
+    required PermissionRepository permissionRepository,
+    required PorterRepository porterRepository,
+    required SettingsRepository settingsRepository,
+  })  : _aboutRepository = aboutRepository,
+        _fileRepository = fileRepository,
+        _permissionRepository = permissionRepository,
+        _porterRepository = porterRepository,
+        _settingsRepository = settingsRepository,
+        super(const SettingsState());
 
-  final GetSettingsUseCase _getSettingsUseCase;
-  final SetSettingsUseCase _setSettingsUseCase;
-  final ExportUseCase _exportUseCase;
-  final ImportUseCase _importUseCase;
+  final AboutRepository _aboutRepository;
+  final FileRepository _fileRepository;
+  final PermissionRepository _permissionRepository;
+  final PorterRepository _porterRepository;
+  final SettingsRepository _settingsRepository;
   StreamSubscription<Settings>? _streamSubscription;
 
-  Future<void> _onInit(
-    SettingsInitialized event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final GetSettingsResult result =
-        await _getSettingsUseCase(const GetSettingsParams());
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    } else {
-      _streamSubscription = result.value?.listen((Settings data) {
-        add(SettingsChanged(settings: data));
-      });
+  Future<void> onInit() async {
+    try {
+      final Stream<Settings> settings = _settingsRepository.get();
+      _streamSubscription = settings.listen((Settings event) {
+        onChanged(settings: event);
+      })
+        ..onError((Object e) => onFailure(message: e.toString()));
+    } catch (e) {
+      onFailure(message: e.toString());
     }
   }
 
-  void _onFailure(
-    SettingsFailed event,
-    Emitter<SettingsState> emit,
-  ) {
+  void onFailure({
+    required String message,
+  }) {
     emit(
       state.copyWith(
         status: SettingsStatus.failure,
-        errorMessage: event.message,
+        errorMessage: message,
       ),
     );
   }
 
-  void _onChanged(
-    SettingsChanged event,
-    Emitter<SettingsState> emit,
-  ) {
+  void onChanged({
+    required Settings settings,
+  }) {
     emit(
       state.copyWith(
         status: SettingsStatus.success,
-        settings: event.settings,
+        settings: settings,
       ),
     );
   }
 
-  Future<void> _onDarkModeChanged(
-    SettingsDarkModeChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          darkMode: event.darkMode,
-        ),
-      ),
+  Future<void> onDarkModeChanged({
+    required bool value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(darkMode: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onPrimaryColorChanged(
-    SettingsPrimaryColorChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          primaryColor: event.color,
-        ),
-      ),
+  Future<void> onPrimaryColorChanged({
+    required int value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(primaryColor: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onSecondaryColorChanged(
-    SettingsSecondaryColorChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          secondaryColor: event.color,
-        ),
-      ),
+  Future<void> onSecondaryColorChanged({
+    required int value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(secondaryColor: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onMaterialGridChanged(
-    SettingsMaterialGridChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          showMaterialGrid: event.showMaterialGrid,
-        ),
-      ),
+  Future<void> onMaterialGridChanged({
+    required bool value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(showMaterialGrid: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onPerformanceOverlayChanged(
-    SettingsPerformanceOverlayChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          showPerformanceOverlay: event.showPerformanceOverlay,
-        ),
-      ),
+  Future<void> onPerformanceOverlayChanged({
+    required bool value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(showPerformanceOverlay: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onImmersiveModeChanged(
-    SettingsImmersiveModeChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          immersiveMode: event.immersiveMode,
-        ),
-      ),
+  Future<void> onImmersiveModeChanged({
+    required bool value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(immersiveMode: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onSemanticOverlayChanged(
-    SettingsSemanticOverlayChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          showSemanticOverlay: event.showSemanticOverlay,
-        ),
-      ),
+  Future<void> onSemanticOverlayChanged({
+    required bool value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(showSemanticOverlay: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onAnalyticsChanged(
-    SettingsAnalyticsChanged event,
-    Emitter<SettingsState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          analytics: event.analytics,
-        ),
-      ),
+  Future<void> onAnalyticsChanged({
+    required bool value,
+  }) {
+    return _setSettings(
+      state.settings.copyWith(analytics: value),
     );
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    }
   }
 
-  Future<void> _onExport(
-    SettingsExportPressed event,
-    Emitter<SettingsState> emit,
-  ) async {
+  Future<void> onExport() async {
     emit(
       state.copyWith(
         status: SettingsStatus.exportInProgress,
       ),
     );
-
-    final ExportResult result = await _exportUseCase(const ExportParams());
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    } else {
+    try {
+      await _permissionRepository.requestStorage();
+      final String result = await _porterRepository.export();
+      final About about = await _aboutRepository.get();
+      final String appName = about.appName;
+      final DateTime now = DateTime.now();
+      final String fileName = '${appName}_${now.secondsSinceEpoch}.db';
+      await _fileRepository.write(
+        value: result,
+        name: fileName,
+        location: FileLocation.downloads,
+      );
       emit(
         state.copyWith(
           status: SettingsStatus.exportSuccess,
         ),
       );
+    } catch (e) {
+      onFailure(message: e.toString());
     }
   }
 
-  Future<void> _onImport(
-    SettingsImportPressed event,
-    Emitter<SettingsState> emit,
-  ) async {
+  Future<void> onImport() async {
     emit(
       state.copyWith(
         status: SettingsStatus.importInProgress,
       ),
     );
-
-    final ImportResult result = await _importUseCase(const ImportParams());
-
-    if (result.hasError) {
-      add(SettingsFailed(message: result.errorMessage!));
-    } else {
+    try {
+      final Uint8List? data = await _fileRepository.pick();
+      if (data == null) {
+        // TODO: localize this
+        throw CustomException('You canceled the import.');
+      }
+      await _porterRepository.import(
+        data: String.fromCharCodes(data),
+      );
       emit(
         state.copyWith(
           status: SettingsStatus.importSuccess,
         ),
       );
+    } catch (e) {
+      onFailure(message: e.toString());
     }
   }
 
@@ -269,5 +176,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   Future<void> close() {
     _streamSubscription?.cancel();
     return super.close();
+  }
+
+  Future<void> _setSettings(Settings settings) async {
+    try {
+      await _settingsRepository.set(settings: settings);
+    } catch (e) {
+      onFailure(message: e.toString());
+    }
   }
 }

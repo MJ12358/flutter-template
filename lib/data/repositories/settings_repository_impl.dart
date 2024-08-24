@@ -4,6 +4,7 @@ import 'package:flutter_template/domain/repositories/settings_repository.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   const SettingsRepositoryImpl({
+    // TODO: figure out how to add the AnalyticsRepo here (circular dependency)
     required SettingsDataSource localDataSource,
   }) : _localDataSource = localDataSource;
 

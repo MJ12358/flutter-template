@@ -2,19 +2,23 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:flutter_template/domain/datasources/network_datasource.dart';
 import 'package:flutter_template/domain/exceptions/platform_exception.dart';
+import 'package:flutter_template/domain/repositories/analytics_repository.dart';
 import 'package:flutter_template/domain/repositories/network_repository.dart';
 
 class NetworkRepositoryImpl implements NetworkRepository {
   const NetworkRepositoryImpl({
+    required AnalyticsRepository analyticsRepository,
     required NetworkDataSource androidDataSource,
     required NetworkDataSource iosDataSource,
     required NetworkDataSource linuxDataSource,
     required NetworkDataSource windowsDataSource,
-  })  : _androidDataSource = androidDataSource,
+  })  : _analyticsRepository = analyticsRepository,
+        _androidDataSource = androidDataSource,
         _iosDataSource = iosDataSource,
         _linuxDataSource = linuxDataSource,
         _windowsDataSource = windowsDataSource;
 
+  final AnalyticsRepository _analyticsRepository;
   final NetworkDataSource _androidDataSource;
   final NetworkDataSource _iosDataSource;
   final NetworkDataSource _linuxDataSource;
@@ -22,18 +26,26 @@ class NetworkRepositoryImpl implements NetworkRepository {
 
   @override
   Future<bool> get isConnected {
-    switch (PlatformExtension.target) {
-      case TargetPlatform.android:
-        return _isConnected(_androidDataSource);
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-        return _isConnected(_iosDataSource);
-      case TargetPlatform.linux:
-        return _isConnected(_linuxDataSource);
-      case TargetPlatform.windows:
-        return _isConnected(_windowsDataSource);
-      default:
-        throw PlatformException.notSupported();
+    try {
+      switch (PlatformExtension.target) {
+        case TargetPlatform.android:
+          return _isConnected(_androidDataSource);
+        case TargetPlatform.iOS:
+        case TargetPlatform.macOS:
+          return _isConnected(_iosDataSource);
+        case TargetPlatform.linux:
+          return _isConnected(_linuxDataSource);
+        case TargetPlatform.windows:
+          return _isConnected(_windowsDataSource);
+        default:
+          throw PlatformException.notSupported();
+      }
+    } catch (e, s) {
+      _analyticsRepository.logException(
+        details: e,
+        stackTrace: s,
+      );
+      rethrow;
     }
   }
 

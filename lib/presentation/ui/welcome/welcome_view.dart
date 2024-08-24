@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_extensionz/flutter_extensionz.dart';
-import 'package:flutter_template/injector.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/app/app.dart';
-import 'package:flutter_template/presentation/ui/welcome/welcome.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of 'welcome.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
@@ -13,8 +6,7 @@ class WelcomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WelcomeBloc>(
-      create: (_) =>
-          Injector.sl<WelcomeBloc>()..add(const WelcomeInitialized()),
+      create: (_) => Injector.sl<WelcomeBloc>()..onInit(),
       child: BlocListener<WelcomeBloc, WelcomeState>(
         listenWhen: (WelcomeState previous, WelcomeState current) {
           return previous.status != current.status;

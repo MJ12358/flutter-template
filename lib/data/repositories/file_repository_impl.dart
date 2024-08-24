@@ -6,20 +6,24 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter_template/domain/datasources/file_datasource.dart';
 import 'package:flutter_template/domain/enums/file.dart';
 import 'package:flutter_template/domain/exceptions/platform_exception.dart';
+import 'package:flutter_template/domain/repositories/analytics_repository.dart';
 import 'package:flutter_template/domain/repositories/file_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FileRepositoryImpl implements FileRepository {
   const FileRepositoryImpl({
+    required AnalyticsRepository analyticsRepository,
     required FileDataSource androidDataSource,
     required FileDataSource iosDataSource,
     required FileDataSource linuxDataSource,
     required FileDataSource windowsDataSource,
-  })  : _androidDataSource = androidDataSource,
+  })  : _analyticsRepository = analyticsRepository,
+        _androidDataSource = androidDataSource,
         _iosDataSource = iosDataSource,
         _linuxDataSource = linuxDataSource,
         _windowsDataSource = windowsDataSource;
 
+  final AnalyticsRepository _analyticsRepository;
   final FileDataSource _androidDataSource;
   final FileDataSource _iosDataSource;
   final FileDataSource _linuxDataSource;
@@ -31,13 +35,21 @@ class FileRepositoryImpl implements FileRepository {
   Future<Uint8List?> pick({
     FileSource? source,
   }) {
-    switch (source) {
-      case FileSource.camera:
-        return _pickCamera();
-      case FileSource.gallery:
-        return _pickGallery();
-      default:
-        return _pickFile();
+    try {
+      switch (source) {
+        case FileSource.camera:
+          return _pickCamera();
+        case FileSource.gallery:
+          return _pickGallery();
+        default:
+          return _pickFile();
+      }
+    } catch (e, s) {
+      _analyticsRepository.logException(
+        details: e,
+        stackTrace: s,
+      );
+      rethrow;
     }
   }
 
@@ -47,17 +59,25 @@ class FileRepositoryImpl implements FileRepository {
     required String name,
     required FileLocation location,
   }) {
-    switch (location) {
-      case FileLocation.application:
-        return _writeToApplication(
-          value: value,
-          name: name,
-        );
-      case FileLocation.downloads:
-        return _writeToDownloads(
-          value: value,
-          name: name,
-        );
+    try {
+      switch (location) {
+        case FileLocation.application:
+          return _writeToApplication(
+            value: value,
+            name: name,
+          );
+        case FileLocation.downloads:
+          return _writeToDownloads(
+            value: value,
+            name: name,
+          );
+      }
+    } catch (e, s) {
+      _analyticsRepository.logException(
+        details: e,
+        stackTrace: s,
+      );
+      rethrow;
     }
   }
 

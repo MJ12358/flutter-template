@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/core/constants.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/settings/settings.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of '../settings.dart';
 
 class SettingsDeveloperSection extends StatelessWidget {
   const SettingsDeveloperSection({super.key});
@@ -40,9 +35,8 @@ class _MaterialGrid extends StatelessWidget {
           title: Text(context.l10n.materialGrid),
           leading: const Icon(Icons.grid_3x3),
           value: state.settings.showMaterialGrid,
-          onChanged: (bool value) => context
-              .read<SettingsBloc>()
-              .add(SettingsMaterialGridChanged(showMaterialGrid: value)),
+          onChanged: (bool value) =>
+              context.read<SettingsBloc>().onMaterialGridChanged(value: value),
         );
       },
     );
@@ -64,11 +58,9 @@ class _PerformanceOverlay extends StatelessWidget {
           title: Text(context.l10n.performanceOverlay),
           leading: const Icon(Icons.perm_device_information),
           value: state.settings.showPerformanceOverlay,
-          onChanged: (bool value) => context.read<SettingsBloc>().add(
-                SettingsPerformanceOverlayChanged(
-                  showPerformanceOverlay: value,
-                ),
-              ),
+          onChanged: (bool value) => context
+              .read<SettingsBloc>()
+              .onPerformanceOverlayChanged(value: value),
         );
       },
     );
@@ -90,9 +82,9 @@ class _SemanticOverlay extends StatelessWidget {
           title: Text(context.l10n.semanticOverlay),
           leading: const Icon(Icons.layers),
           value: state.settings.showSemanticOverlay,
-          onChanged: (bool value) => context.read<SettingsBloc>().add(
-                SettingsSemanticOverlayChanged(showSemanticOverlay: value),
-              ),
+          onChanged: (bool value) => context
+              .read<SettingsBloc>()
+              .onSemanticOverlayChanged(value: value),
         );
       },
     );

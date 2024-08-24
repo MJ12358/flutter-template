@@ -1,95 +1,71 @@
-import 'dart:async';
+part of '../app.dart';
 
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_template/domain/entities/settings.dart';
-import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
-import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
-
-part 'app_event.dart';
-part 'app_state.dart';
-
-class AppBloc extends Bloc<AppEvent, AppState> {
+class AppBloc extends Cubit<AppState> {
   AppBloc({
-    required GetSettingsUseCase getSettingsUseCase,
-    required SetSettingsUseCase setSettingsUseCase,
-  })  : _getSettingsUseCase = getSettingsUseCase,
-        _setSettingsUseCase = setSettingsUseCase,
-        super(const AppState()) {
-    on<AppInitialized>(_onInit);
-    on<AppFailed>(_onFailure);
-    on<AppSettingsChanged>(_onSettingsChange);
-    on<AppTutorialCompleted>(_onTutorialComplete);
-  }
+    required SettingsRepository settingsRepository,
+  })  : _settingsRepository = settingsRepository,
+        super(const AppState());
 
-  final GetSettingsUseCase _getSettingsUseCase;
-  final SetSettingsUseCase _setSettingsUseCase;
+  final SettingsRepository _settingsRepository;
   StreamSubscription<Settings>? _settingsSubscription;
 
   AppStatus _getStatus(Settings settings) {
     return settings.needsWelcome ? AppStatus.needsWelcome : AppStatus.success;
   }
 
-  Future<void> _onInit(
-    AppInitialized event,
-    Emitter<AppState> emit,
-  ) async {
-    final GetSettingsResult settingsResult =
-        await _getSettingsUseCase(const GetSettingsParams());
-
-    if (settingsResult.hasError) {
-      add(AppFailed(message: settingsResult.errorMessage!));
-    } else {
-      _settingsSubscription = settingsResult.value?.listen((Settings data) {
-        add(AppSettingsChanged(settings: data));
-      });
+  Future<void> onInit() async {
+    try {
+      final Stream<Settings> settings = _settingsRepository.get();
+      _settingsSubscription = settings.listen((Settings event) {
+        onSettingsChanged(value: event);
+      })
+        ..onError((Object e) => onFailure(message: e.toString()));
+    } catch (e) {
+      onFailure(message: e.toString());
     }
   }
 
-  void _onFailure(
-    AppFailed event,
-    Emitter<AppState> emit,
-  ) {
+  void onFailure({
+    required String message,
+  }) {
     emit(
       state.copyWith(
         status: AppStatus.failure,
-        errorMessage: event.message,
+        errorMessage: message,
       ),
     );
   }
 
-  void _onSettingsChange(
-    AppSettingsChanged event,
-    Emitter<AppState> emit,
-  ) {
+  void onSettingsChanged({
+    required Settings value,
+  }) {
     emit(
       state.copyWith(
-        status: _getStatus(event.settings),
-        settings: event.settings,
+        status: _getStatus(value),
+        settings: value,
       ),
     );
   }
 
-  Future<void> _onTutorialComplete(
-    AppTutorialCompleted event,
-    Emitter<AppState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
-        settings: state.settings.copyWith(
-          needsTutorial: false,
-        ),
+  Future<void> onTutorialComplete() {
+    return _setSettings(
+      state.settings.copyWith(
+        needsTutorial: false,
       ),
     );
-
-    if (result.hasError) {
-      add(AppFailed(message: result.errorMessage!));
-    }
   }
 
   @override
   Future<void> close() {
     _settingsSubscription?.cancel();
     return super.close();
+  }
+
+  Future<void> _setSettings(Settings settings) async {
+    try {
+      await _settingsRepository.set(settings: settings);
+    } catch (e) {
+      onFailure(message: e.toString());
+    }
   }
 }

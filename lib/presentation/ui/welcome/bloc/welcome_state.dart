@@ -1,4 +1,4 @@
-part of 'welcome_bloc.dart';
+part of '../welcome.dart';
 
 enum WelcomeStatus {
   initial,

@@ -1,79 +1,52 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_template/domain/entities/settings.dart';
-import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
-import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
+part of '../welcome.dart';
 
-part 'welcome_event.dart';
-part 'welcome_state.dart';
-
-class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
+class WelcomeBloc extends Cubit<WelcomeState> {
   WelcomeBloc({
-    required GetSettingsUseCase getSettingsUseCase,
-    required SetSettingsUseCase setSettingsUseCase,
-  })  : _getSettingsUseCase = getSettingsUseCase,
-        _setSettingsUseCase = setSettingsUseCase,
-        super(const WelcomeState()) {
-    on<WelcomeInitialized>(_onInit);
-    on<WelcomeFailed>(_onFailure);
-    on<WelcomeCompleted>(_onComplete);
-  }
+    required SettingsRepository settingsRepository,
+  })  : _settingsRepository = settingsRepository,
+        super(const WelcomeState());
 
-  final GetSettingsUseCase _getSettingsUseCase;
-  final SetSettingsUseCase _setSettingsUseCase;
+  final SettingsRepository _settingsRepository;
 
-  Future<void> _onInit(
-    WelcomeInitialized event,
-    Emitter<WelcomeState> emit,
-  ) async {
-    final GetSettingsResult result =
-        await _getSettingsUseCase(const GetSettingsParams());
-
-    if (result.hasError) {
-      add(WelcomeFailed(message: result.errorMessage!));
-    } else {
-      final Settings? settings = await result.value?.first;
+  Future<void> onInit() async {
+    try {
+      final Settings settings = await _settingsRepository.get().first;
       emit(
         state.copyWith(
           status: WelcomeStatus.initial,
           settings: settings,
         ),
       );
+    } catch (e) {
+      onFailure(message: e.toString());
     }
   }
 
-  void _onFailure(
-    WelcomeFailed event,
-    Emitter<WelcomeState> emit,
-  ) {
+  void onFailure({
+    required String message,
+  }) {
     emit(
       state.copyWith(
         status: WelcomeStatus.failure,
-        errorMessage: event.message,
+        errorMessage: message,
       ),
     );
   }
 
-  Future<void> _onComplete(
-    WelcomeCompleted event,
-    Emitter<WelcomeState> emit,
-  ) async {
-    final SetSettingsResult result = await _setSettingsUseCase(
-      SetSettingsParams(
+  Future<void> onComplete() async {
+    try {
+      await _settingsRepository.set(
         settings: state.settings.copyWith(
           needsWelcome: false,
         ),
-      ),
-    );
-
-    if (result.hasError) {
-      add(WelcomeFailed(message: result.errorMessage!));
-    } else {
+      );
       emit(
         state.copyWith(
           status: WelcomeStatus.complete,
         ),
       );
+    } catch (e) {
+      onFailure(message: e.toString());
     }
   }
 }

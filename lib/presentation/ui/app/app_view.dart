@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_extensionz/flutter_extensionz.dart';
-import 'package:flutter_template/presentation/ui/app/app.dart';
-import 'package:flutter_template/presentation/ui/settings/settings.dart';
-import 'package:flutter_template/presentation/widgets/navigation/bottom_navigation.dart';
-import 'package:flutter_template/presentation/widgets/navigation/side_navigation.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of 'app.dart';
 
 class AppView extends StatefulWidget {
   const AppView({super.key});
@@ -14,10 +7,11 @@ class AppView extends StatefulWidget {
   State<AppView> createState() => _AppViewState();
 }
 
-class _AppViewState extends State<AppView> {
-  late int _currentPage;
-  late final GlobalKey _key;
-  late final PageController _pageController;
+class _AppViewState extends State<AppView>
+    with AutomaticKeepAliveClientMixin, RestorationMixin {
+  final RestorableInt _currentPage = RestorableInt(0);
+  final GlobalKey _key = GlobalKey();
+  final PageController _pageController = PageController();
 
   final List<Widget> _pages = const <Widget>[
     Placeholder(),
@@ -25,11 +19,14 @@ class _AppViewState extends State<AppView> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _currentPage = 0;
-    _key = GlobalKey();
-    _pageController = PageController();
+  bool get wantKeepAlive => true;
+
+  @override
+  String get restorationId => 'app_view';
+
+  @override
+  void restoreState(_, __) {
+    registerForRestoration(_currentPage, 'current_page');
   }
 
   @override
@@ -40,6 +37,8 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return BlocListener<AppBloc, AppState>(
       listenWhen: (AppState previous, AppState current) {
         return previous.status != current.status;
@@ -52,14 +51,14 @@ class _AppViewState extends State<AppView> {
       child: CustomOrientationBuilder(
         landscapeBuilder: (_) {
           return _Landscape(
-            index: _currentPage,
+            index: _currentPage.value,
             onPageChanged: _onPageChanged,
             pageView: _getPageView(),
           );
         },
         portraitBuilder: (_) {
           return _Portrait(
-            index: _currentPage,
+            index: _currentPage.value,
             onPageChanged: _onPageChanged,
             pageView: _getPageView(),
           );
@@ -73,13 +72,14 @@ class _AppViewState extends State<AppView> {
       key: _key,
       clipBehavior: Clip.none,
       physics: const NeverScrollableScrollPhysics(),
+      restorationId: 'app_page_view',
       controller: _pageController,
       children: _pages,
     );
   }
 
   void _onPageChanged(int page) {
-    _currentPage = page;
+    _currentPage.value = page;
     _pageController.jumpToPage(page);
   }
 }

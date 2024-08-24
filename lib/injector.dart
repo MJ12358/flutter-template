@@ -37,11 +37,6 @@ import 'package:flutter_template/domain/repositories/network_repository.dart';
 import 'package:flutter_template/domain/repositories/permission_repository.dart';
 import 'package:flutter_template/domain/repositories/porter_repository.dart';
 import 'package:flutter_template/domain/repositories/settings_repository.dart';
-import 'package:flutter_template/domain/usecases/files/pick_file_usecase.dart';
-import 'package:flutter_template/domain/usecases/porter/export_usecase.dart';
-import 'package:flutter_template/domain/usecases/porter/import_usecase.dart';
-import 'package:flutter_template/domain/usecases/settings/get_settings_usecase.dart';
-import 'package:flutter_template/domain/usecases/settings/set_settings_usecase.dart';
 import 'package:flutter_template/presentation/ui/app/app.dart';
 import 'package:flutter_template/presentation/ui/settings/settings.dart';
 import 'package:flutter_template/presentation/ui/welcome/welcome.dart';
@@ -91,72 +86,22 @@ class Injector {
 
     sl.registerLazySingleton<AppBloc>(
       () => AppBloc(
-        getSettingsUseCase: sl(),
-        setSettingsUseCase: sl(),
+        settingsRepository: sl(),
       ),
     );
 
     sl.registerFactory<SettingsBloc>(
       () => SettingsBloc(
-        getSettingsUseCase: sl(),
-        setSettingsUseCase: sl(),
-        exportUseCase: sl(),
-        importUseCase: sl(),
+        aboutRepository: sl(),
+        fileRepository: sl(),
+        permissionRepository: sl(),
+        porterRepository: sl(),
+        settingsRepository: sl(),
       ),
     );
 
     sl.registerFactory<WelcomeBloc>(
       () => WelcomeBloc(
-        getSettingsUseCase: sl(),
-        setSettingsUseCase: sl(),
-      ),
-    );
-
-    /// Use Case Registration
-    ///
-    ///
-
-    // files
-
-    sl.registerLazySingleton<PickFileUseCase>(
-      () => PickFileUseCaseImpl(
-        analyticsRepository: sl(),
-        fileRepository: sl(),
-      ),
-    );
-
-    // porter
-
-    sl.registerLazySingleton<ExportUseCase>(
-      () => ExportUseCaseImpl(
-        aboutRepository: sl(),
-        analyticsRepository: sl(),
-        fileRepository: sl(),
-        permissionRepository: sl(),
-        porterRepository: sl(),
-      ),
-    );
-
-    sl.registerLazySingleton<ImportUseCase>(
-      () => ImportUseCaseImpl(
-        analyticsRepository: sl(),
-        fileRepository: sl(),
-        porterRepository: sl(),
-      ),
-    );
-
-    // settings
-
-    sl.registerLazySingleton<GetSettingsUseCase>(
-      () => GetSettingsUseCaseImpl(
-        analyticsRepository: sl(),
-        settingsRepository: sl(),
-      ),
-    );
-
-    sl.registerLazySingleton<SetSettingsUseCase>(
-      () => SetSettingsUseCaseImpl(
-        analyticsRepository: sl(),
         settingsRepository: sl(),
       ),
     );
@@ -167,6 +112,7 @@ class Injector {
 
     sl.registerLazySingleton<AboutRepository>(
       () => AboutRepositoryImpl(
+        analyticsRepository: sl(),
         androidDataSource: sl(instanceName: android),
         iosDataSource: sl(instanceName: ios),
         linuxDataSource: sl(instanceName: linux),
@@ -185,6 +131,7 @@ class Injector {
 
     sl.registerLazySingleton<FileRepository>(
       () => FileRepositoryImpl(
+        analyticsRepository: sl(),
         androidDataSource: sl(instanceName: android),
         iosDataSource: sl(instanceName: ios),
         linuxDataSource: sl(instanceName: linux),
@@ -194,6 +141,7 @@ class Injector {
 
     sl.registerLazySingleton<NetworkRepository>(
       () => NetworkRepositoryImpl(
+        analyticsRepository: sl(),
         androidDataSource: sl(instanceName: android),
         iosDataSource: sl(instanceName: ios),
         linuxDataSource: sl(instanceName: linux),
@@ -207,6 +155,7 @@ class Injector {
 
     sl.registerLazySingleton<PorterRepository>(
       () => PorterRepositoryImpl(
+        analyticsRepository: sl(),
         localDataSource: sl(instanceName: local),
       ),
     );

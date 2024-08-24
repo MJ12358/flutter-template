@@ -1,4 +1,4 @@
-part of 'settings_bloc.dart';
+part of '../settings.dart';
 
 enum SettingsStatus {
   loading,

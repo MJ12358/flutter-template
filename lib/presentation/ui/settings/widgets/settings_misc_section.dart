@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_extensionz/flutter_extensionz.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/settings/settings.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of '../settings.dart';
 
 class SettingsMiscSection extends StatelessWidget {
   const SettingsMiscSection({super.key});
@@ -38,8 +33,7 @@ class _Import extends StatelessWidget {
               : null,
           onTap: () => context.showAlertDialog(
             Text(context.l10n.areYouSureImport),
-            onAccept: () =>
-                context.read<SettingsBloc>().add(const SettingsImportPressed()),
+            onAccept: () => context.read<SettingsBloc>().onImport(),
           ),
         );
       },
@@ -63,8 +57,7 @@ class _Export extends StatelessWidget {
           trailing: state.status == SettingsStatus.exportInProgress
               ? const CircularProgressIndicator()
               : null,
-          onTap: () =>
-              context.read<SettingsBloc>().add(const SettingsExportPressed()),
+          onTap: () => context.read<SettingsBloc>().onExport(),
         );
       },
     );

@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/settings/settings.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of '../settings.dart';
 
 class SettingsLegalSection extends StatelessWidget {
   const SettingsLegalSection({super.key});
@@ -42,11 +38,8 @@ class _Analytics extends StatelessWidget {
           title: Text(context.l10n.analytics),
           leading: const Icon(Icons.analytics_outlined),
           value: state.settings.analytics,
-          onChanged: (bool value) => context.read<SettingsBloc>().add(
-                SettingsAnalyticsChanged(
-                  analytics: value,
-                ),
-              ),
+          onChanged: (bool value) =>
+              context.read<SettingsBloc>().onAnalyticsChanged(value: value),
         );
       },
     );

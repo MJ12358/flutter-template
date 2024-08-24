@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_extensionz/flutter_extensionz.dart';
-import 'package:flutter_template/injector.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/app/app.dart';
-import 'package:flutter_template/presentation/ui/settings/settings.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of 'settings.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -24,8 +17,7 @@ class _SettingsViewState extends State<SettingsView>
     super.build(context);
 
     return BlocProvider<SettingsBloc>(
-      create: (_) =>
-          Injector.sl<SettingsBloc>()..add(const SettingsInitialized()),
+      create: (_) => Injector.sl<SettingsBloc>()..onInit(),
       child: BlocListener<SettingsBloc, SettingsState>(
         listenWhen: (SettingsState previous, SettingsState current) {
           return previous.status != current.status;

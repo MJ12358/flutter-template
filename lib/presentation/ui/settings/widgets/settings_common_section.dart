@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/core/constants.dart';
-import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/settings/settings.dart';
-import 'package:flutter_widgetz/flutter_widgetz.dart';
+part of '../settings.dart';
 
 class SettingsCommonSection extends StatelessWidget {
   const SettingsCommonSection({super.key});
@@ -38,9 +33,8 @@ class _DarkMode extends StatelessWidget {
               ? const Icon(Icons.dark_mode)
               : const Icon(Icons.light_mode),
           value: state.settings.darkMode,
-          onChanged: (bool value) => context
-              .read<SettingsBloc>()
-              .add(SettingsDarkModeChanged(darkMode: value)),
+          onChanged: (bool value) =>
+              context.read<SettingsBloc>().onDarkModeChanged(value: value),
         );
       },
     );
@@ -64,7 +58,7 @@ class _PrimaryColor extends StatelessWidget {
           title: Text(context.l10n.primaryColor),
           onChanged: (Color color) => context
               .read<SettingsBloc>()
-              .add(SettingsPrimaryColorChanged(color: color.value)),
+              .onPrimaryColorChanged(value: color.value),
         );
       },
     );
@@ -89,7 +83,7 @@ class _SecondaryColor extends StatelessWidget {
           title: Text(context.l10n.secondaryColor),
           onChanged: (Color color) => context
               .read<SettingsBloc>()
-              .add(SettingsSecondaryColorChanged(color: color.value)),
+              .onSecondaryColorChanged(value: color.value),
         );
       },
     );
@@ -110,11 +104,8 @@ class _ImmersiveMode extends StatelessWidget {
         return SettingsTile.immersiveMode(
           title: Text(context.l10n.immersiveMode),
           value: state.settings.immersiveMode,
-          onChanged: (bool value) => context.read<SettingsBloc>().add(
-                SettingsImmersiveModeChanged(
-                  immersiveMode: value,
-                ),
-              ),
+          onChanged: (bool value) =>
+              context.read<SettingsBloc>().onImmersiveModeChanged(value: value),
         );
       },
     );

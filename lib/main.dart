@@ -28,7 +28,7 @@ class _Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AppBloc>(
-      create: (_) => Injector.sl<AppBloc>()..add(const AppInitialized()),
+      create: (_) => Injector.sl<AppBloc>()..onInit(),
       child: _MainView(_navigatorKey),
     );
   }

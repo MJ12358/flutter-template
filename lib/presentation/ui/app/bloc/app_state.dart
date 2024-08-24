@@ -1,4 +1,4 @@
-part of 'app_bloc.dart';
+part of '../app.dart';
 
 enum AppStatus {
   initializing,
