@@ -1,6 +1,6 @@
 name: "🚀 Feature"
 description: "Suggest an idea for the mobile app"
-type: Feature
+labels: ["feature"]
 assignees: []
 body:
   - type: markdown

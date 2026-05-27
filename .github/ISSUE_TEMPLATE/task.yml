@@ -1,6 +1,6 @@
 name: "📋 Task"
 description: "Create a task for development, documentation or maintenance work"
-type: Task
+labels: ["task"]
 assignees: []
 body:
   - type: markdown
