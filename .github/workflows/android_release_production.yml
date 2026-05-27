@@ -1,0 +1,23 @@
+name: Android Release (Production)
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Release App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Promote to Production
+        uses: kevin-david/promote-play-release@v1.2.0
+        with:
+          service-account-json-file: service_accounts/github-service-account.json
+          package-name: ${{ vars.APP_ID }}
+          from-track: "internal"
+          to-track: "production"
+
+

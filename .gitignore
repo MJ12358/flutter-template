@@ -4,11 +4,16 @@
 *.pyc
 *.swp
 .DS_Store
+.asc
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
+metadata/
 migrate_working_dir/
+desktop.ini
 
 # IntelliJ related
 *.iml
@@ -39,7 +44,19 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
+/android/.kotlin
+/android/build
 /android/app/debug
 /android/app/profile
 /android/app/release
 /android/app/build
+/android/app/.cxx
+
+# iOS Build
+ios/build/.last_build_id
+
+# Secrets
+# android/key.properties
+# lib/firebase_options.dart
+# android/app/release_keystore.jks
+# service_accounts/*

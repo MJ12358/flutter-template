@@ -1,32 +1,38 @@
-abstract class Searchable {
-  List<Object?> get fields;
+import 'package:dart_extensionz/dart_extensionz.dart';
+
+/// An abstract class representing an item that can be searched.
+abstract interface class Searchable {
+  /// A list of values that can be searched.
+  List<String?> get searchables;
 }
 
-extension on Searchable {
-  Searchable? search(String value) {
-    final String _value = value.trim().toLowerCase();
-    for (final Object? field in fields) {
-      if (field != null) {
-        if (field.toString().toLowerCase().contains(_value)) {
-          return this;
-        }
-      }
+extension SearchableExtension on Searchable {
+  /// Returns a [Searchable] if any of its fields contain the given [value].
+  /// Returns null if [value] is empty or no fields match.
+  bool matches(String value) {
+    if (value.isEmpty) {
+      return false;
     }
-    return null;
+
+    final String v = value.normalizeSpace().toLowerCase();
+
+    return searchables.any((String? field) {
+      if (field == null || field.isBlank) {
+        return false;
+      }
+      return field.normalizeSpace().toLowerCase().contains(v);
+    });
   }
 }
 
 extension SearchablesExtension<T extends Searchable> on List<T> {
+  /// Returns a list of [Searchable] items that match the given [value].
+  /// If [value] is empty, returns an empty list.
   List<T> search(String value) {
-    final List<T> results = <T>[];
-
-    for (final T searchable in this) {
-      final T? s = searchable.search(value) as T?;
-      if (s != null) {
-        results.add(s);
-      }
+    if (value.isEmpty) {
+      return <T>[];
     }
 
-    return results;
+    return where((T e) => e.matches(value)).toList();
   }
 }

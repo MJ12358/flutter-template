@@ -1,5 +1,5 @@
 import 'package:flutter_template/domain/entities/about.dart';
 
-abstract class AboutDataSource {
+abstract interface class AboutDataSource {
   Future<About> get();
 }

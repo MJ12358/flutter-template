@@ -1,0 +1,124 @@
+name: iOS Release (Internal)
+
+on:
+  workflow_call:
+    inputs:
+      flutter_version:
+        required: true
+        type: string
+      release_notes:
+        required: true
+        type: string
+      tag:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build App
+    runs-on: macos-26
+    env:
+      API_KEY_NAME: AuthKey_${{ secrets.APPSTORECONNECT_API_KEY_ID }}.p8
+      API_KEY_PATH: ~/private_keys
+      CERTIFICATE_NAME: certificate.p12
+      CERTIFICATE_PATH: ~/Library/MobileDevice/Certificates
+      KEYCHAIN: $RUNNER_TEMP/build.keychain-db
+      PREFERENCES_PATH: ~/Library/Preferences
+      PROVISIONING_PROFILE_NAME: profile.mobileprovision
+      PROVISIONING_PROFILE_PATH: ~/Library/MobileDevice/Provisioning\ Profiles
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Create Folders for Signing
+        run: |
+          mkdir -p ${{ env.API_KEY_PATH }}
+          mkdir -p ${{ env.CERTIFICATE_PATH }}
+          mkdir -p ${{ env.PREFERENCES_PATH }}
+          mkdir -p ${{ env.PROVISIONING_PROFILE_PATH }}
+
+      - name: Decode Certificate, Provisioning Profile and API Key
+        env:
+          API_KEY: ${{ env.API_KEY_PATH }}/${{ env.API_KEY_NAME }}
+          CERTIFICATE: ${{ env.CERTIFICATE_PATH }}/${{ env.CERTIFICATE_NAME }}
+          PROVISIONING_PROFILE: ${{ env.PROVISIONING_PROFILE_PATH }}/${{ env.PROVISIONING_PROFILE_NAME }}
+        run: |
+          echo -n "${{ secrets.APPSTORECONNECT_API_KEY_BASE64 }}" | base64 -d -o ${{ env.API_KEY }}
+          echo -n "${{ secrets.APPLE_SIGNING_CERT_BASE64 }}" | base64 -d -o ${{ env.CERTIFICATE }}
+          echo -n "${{ secrets.APPLE_PROVISIONING_PROFILE_BASE64 }}" | base64 -d -o ${{ env.PROVISIONING_PROFILE }}
+
+      - name: Setup Keychain
+        env:
+          CERTIFICATE: ${{ env.CERTIFICATE_PATH }}/${{ env.CERTIFICATE_NAME }}
+        run: |
+          security create-keychain -p "${{ secrets.APPLE_KEYCHAIN_PASSWORD }}" ${{ env.KEYCHAIN }}
+          security set-keychain-settings -lut 21600 ${{ env.KEYCHAIN }}
+          security unlock-keychain -p "${{ secrets.APPLE_KEYCHAIN_PASSWORD }}" ${{ env.KEYCHAIN }}
+          security import ${{ env.CERTIFICATE }} -P "${{ secrets.APPLE_KEYCHAIN_PASSWORD }}" -A -t cert -f pkcs12 -k ${{ env.KEYCHAIN }}
+          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.APPLE_KEYCHAIN_PASSWORD }}" ${{ env.KEYCHAIN }}
+          security list-keychain -d user -s ${{ env.KEYCHAIN }}
+          security default-keychain -s ${{ env.KEYCHAIN }}
+
+      - name: Configure Xcode
+        run: |
+          sudo xcode-select --switch /Applications/Xcode_26.4.app/Contents/Developer
+          sudo xcodebuild -runFirstLaunch
+
+      - name: License Xcode
+        run: |
+          touch ${{ env.PREFERENCES_PATH }}/com.apple.dt.Xcode.plist
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ inputs.flutter_version }}
+
+      - name: Get Dependencies
+        run: |
+          flutter clean
+          rm -rf ~/.gradle/caches/
+          rm -rf ios/Pods ios/Podfile.lock
+          flutter pub get
+          cd ios
+          pod repo update
+          pod install
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run Tests
+        run: flutter test
+
+      - name: Build IPA
+        run: |
+          flutter build ipa --release \
+          --export-options-plist=ios/ExportOptions.plist
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-${{ inputs.tag }}
+          path: build/ios/ipa/*.ipa
+
+      - name: Upload to App Store Connect
+        run: |
+          xcrun altool --upload-app \
+          --file build/ios/ipa/*.ipa \
+          --type ios \
+          --apiKey ${{ secrets.APPSTORECONNECT_API_KEY_ID }} \
+          --apiIssuer ${{ secrets.APPSTORECONNECT_API_KEY_ISSUER_ID }} \
+          --asc-provider ${{ vars.APPLE_TEAM_ID }}
+
+      - name: Clean Up
+        if: always()
+        run: |
+          rm -rf ${{ env.CERTIFICATE_PATH }}/*
+          rm -rf ${{ env.PREFERENCES_PATH }}/*
+          rm -rf ${{ env.PROVISIONING_PROFILE_PATH }}/*
+          security delete-keychain ${{ env.KEYCHAIN }}
+          rm -rf ~/.gradle/caches/
+          if type -p flutter > /dev/null 2>&1; then
+            flutter clean
+          fi

@@ -1,31 +1,23 @@
 import 'dart:async';
-import 'dart:typed_data';
 
-import 'package:dart_extensionz/dart_extensionz.dart';
-import 'package:equatable/equatable.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_extensionz/flutter_extensionz.dart';
 import 'package:flutter_template/core/constants.dart';
-import 'package:flutter_template/domain/entities/about.dart';
 import 'package:flutter_template/domain/entities/settings.dart';
-import 'package:flutter_template/domain/enums/file.dart';
-import 'package:flutter_template/domain/exceptions/exception.dart';
-import 'package:flutter_template/domain/repositories/about_repository.dart';
-import 'package:flutter_template/domain/repositories/file_repository.dart';
-import 'package:flutter_template/domain/repositories/permission_repository.dart';
-import 'package:flutter_template/domain/repositories/porter_repository.dart';
+import 'package:flutter_template/domain/entities/shared_prefs.dart';
 import 'package:flutter_template/domain/repositories/settings_repository.dart';
-import 'package:flutter_template/injector.dart';
+import 'package:flutter_template/domain/repositories/shared_prefs_repository.dart';
+import 'package:flutter_template/injector/injector.dart';
 import 'package:flutter_template/presentation/extensions/localization_extension.dart';
-import 'package:flutter_template/presentation/ui/app/app.dart';
 import 'package:flutter_widgetz/flutter_widgetz.dart';
+import 'package:rxdart/rxdart.dart' show Rx;
 
 part 'bloc/settings_bloc.dart';
 part 'bloc/settings_state.dart';
+part 'settings.g.dart';
 part 'settings_view.dart';
 part 'widgets/settings_body.dart';
 part 'widgets/settings_common_section.dart';
-part 'widgets/settings_developer_section.dart';
 part 'widgets/settings_legal_section.dart';
-part 'widgets/settings_misc_section.dart';

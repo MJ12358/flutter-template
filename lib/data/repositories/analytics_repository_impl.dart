@@ -1,55 +1,61 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:flutter_template/core/constants.dart';
 import 'package:flutter_template/domain/datasources/analytics_datasource.dart';
-import 'package:flutter_template/domain/entities/settings.dart';
+import 'package:flutter_template/domain/entities/shared_prefs.dart';
 import 'package:flutter_template/domain/repositories/analytics_repository.dart';
-import 'package:flutter_template/domain/repositories/settings_repository.dart';
+import 'package:flutter_template/domain/repositories/shared_prefs_repository.dart';
 
 class AnalyticsRepositoryImpl implements AnalyticsRepository {
   AnalyticsRepositoryImpl({
-    required AnalyticsDataSource remoteDataSource,
-    required AnalyticsDataSource webDataSource,
-    required SettingsRepository settingsRepository,
-  })  : _remoteDataSource = remoteDataSource,
-        _webDataSource = webDataSource {
-    settingsRepository.get().listen((Settings event) {
-      _settings = event;
-    });
+    required this._remoteDataSource,
+    required SharedPrefsRepository sharedPrefsRepository,
+  }) {
+    sharedPrefsRepository
+        .get()
+        .map((SharedPrefs event) => event.app.analyticsEnabled)
+        .distinct()
+        .listen((bool analyticsEnabled) {
+          _analyticsEnabled = analyticsEnabled;
+        });
   }
 
   final AnalyticsDataSource _remoteDataSource;
-  final AnalyticsDataSource _webDataSource;
-
-  late Settings _settings;
+  bool _analyticsEnabled = true;
 
   @override
-  void logException({
-    Object? details,
-    StackTrace? stackTrace,
+  void error({
+    Object? message,
+    StackTrace? trace,
   }) {
-    if (!_settings.analytics) {
+    if (!_analyticsEnabled) {
       return;
     }
-    try {
-      if (Build.isWeb) {
-        unawaited(
-          _webDataSource.logException(
-            details: details,
-            stackTrace: stackTrace,
-          ),
-        );
-      } else {
-        unawaited(
-          _remoteDataSource.logException(
-            details: details,
-            stackTrace: stackTrace,
-          ),
-        );
-      }
-    } catch (e, s) {
-      log('$e', stackTrace: s);
+    unawaited(
+      _remoteDataSource.error(
+        message: message,
+        trace: trace,
+      ),
+    );
+  }
+
+  @override
+  void fatal({
+    Object? message,
+    StackTrace? trace,
+  }) {
+    if (!_analyticsEnabled) {
+      return;
     }
+    unawaited(
+      _remoteDataSource.fatal(
+        message: message,
+        trace: trace,
+      ),
+    );
+  }
+
+  @override
+  void forceCrash() {
+    _remoteDataSource.forceCrash();
   }
 }

@@ -3,9 +3,7 @@
 import 'package:dart_extensionz/dart_extensionz.dart';
 
 class CustomException implements Exception {
-  CustomException([
-    this.message,
-  ]);
+  CustomException([this.message]);
 
   final String? message;
 

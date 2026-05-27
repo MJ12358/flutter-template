@@ -58,7 +58,7 @@ class _PrimaryColor extends StatelessWidget {
           title: Text(context.l10n.primaryColor),
           onChanged: (Color color) => context
               .read<SettingsBloc>()
-              .onPrimaryColorChanged(value: color.value),
+              .onPrimaryColorChanged(value: color.toInt()),
         );
       },
     );
@@ -83,7 +83,7 @@ class _SecondaryColor extends StatelessWidget {
           title: Text(context.l10n.secondaryColor),
           onChanged: (Color color) => context
               .read<SettingsBloc>()
-              .onSecondaryColorChanged(value: color.value),
+              .onSecondaryColorChanged(value: color.toInt()),
         );
       },
     );

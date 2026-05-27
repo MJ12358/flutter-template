@@ -1,0 +1,137 @@
+name: "🐛 Bug"
+description: "Report a bug or unexpected behavior"
+type: Bug
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Please provide as much detail as possible to help us reproduce and fix the issue.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: "Platform"
+      description: "Which platform(s) are affected?"
+      multiple: true
+      options:
+        - "Android"
+        - "iOS"
+        - "Both"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device-type
+    attributes:
+      label: "Device Type"
+      description: "What type of device?"
+      options:
+        - "Phone"
+        - "Tablet"
+        - "Emulator/Simulator"
+        - "All"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: input
+    id: device-model
+    attributes:
+      label: "Device Model"
+      description: "e.g., iPhone 15 Pro, Samsung Galaxy S23, Pixel 7"
+      placeholder: "Enter device model"
+
+  - type: input
+    id: os-version
+    attributes:
+      label: "OS Version"
+      description: "e.g., iOS 17.2, Android 14, One UI 6.0"
+      placeholder: "Enter OS version"
+
+  - type: input
+    id: app-version
+    attributes:
+      label: "App Version"
+      description: "Version number from the app settings"
+      placeholder: "e.g., 2.5.1 (123)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: "Bug Description"
+      description: "A clear and concise description of what the bug is"
+      placeholder: "When I do X, Y happens instead of Z..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: "Steps to Reproduce"
+      description: "Detailed steps to reproduce the issue"
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      value: |
+        1.
+        2.
+        3.
+        4.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: "Expected Behavior"
+      description: "What did you expect to happen?"
+      placeholder: "I expected that when I do X, Y should happen..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: "Actual Behavior"
+      description: "What actually happened? Include any error messages"
+      placeholder: "Instead, when I do X, Z happens..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots-videos
+    attributes:
+      label: "Screenshots/Video"
+      description: "If applicable, add screenshots or screen recordings to help explain your problem"
+      placeholder: "Drag and drop images or videos here"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Logs"
+      description: "If you have relevant logs, please paste them here"
+      placeholder: |
+        You can get logs from:
+        - Android: `adb logcat`
+        - iOS: Xcode Console
+        - Inside the app via Developer Logs
+        ```
+        Paste logs here
+        ```
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I have searched the existing issues and this is not a duplicate"
+          required: true
+        - label: "I have provided all required information"
+          required: true
+        - label: "This issue is reproducible in the latest version of the app"
+          required: false

@@ -25,10 +25,6 @@ class _SettingsViewState extends State<SettingsView>
         listener: (BuildContext context, SettingsState state) {
           if (state.status == SettingsStatus.failure) {
             context.showSnackBar(Text(state.errorMessage));
-          } else if (state.status == SettingsStatus.exportSuccess) {
-            context.showSnackBar(Text(context.l10n.exportSuccess));
-          } else if (state.status == SettingsStatus.importSuccess) {
-            context.safePushAndRemove(const AppView());
           }
         },
         child: CustomScaffold(

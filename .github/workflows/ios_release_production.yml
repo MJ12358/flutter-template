@@ -1,0 +1,135 @@
+name: iOS Release (Production)
+
+on:
+  workflow_call:
+    inputs:
+      release_notes:
+        required: true
+        type: string
+      tag:
+        required: true
+        type: string
+      build_number:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Release App
+    runs-on: macos-latest
+    env:
+      API_KEY_NAME: AuthKey_${{ secrets.APPSTORECONNECT_API_KEY_ID }}.p8
+      API_KEY_PATH: service_accounts/apple
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install App Store Connect CLI
+        run: |
+          brew install asc
+
+      - name: Prepare API Key
+        run: |
+          chmod 600 ${{ env.API_KEY_PATH }}/${{ env.API_KEY_NAME }}
+
+      - name: Authenticate with App Store Connect
+        run: |
+          asc auth login \
+          --bypass-keychain \
+          --name "${{ vars.APP_NAME }}" \
+          --key-id "${{ secrets.APPSTORECONNECT_API_KEY_ID }}" \
+          --issuer-id "${{ secrets.APPSTORECONNECT_API_KEY_ISSUER_ID }}" \
+          --private-key ${{ env.API_KEY_PATH }}/${{ env.API_KEY_NAME }}
+
+      - name: Validate Authentication
+        run: |
+          asc auth status --validate
+
+      - name: Get Build ID
+        id: get_build
+        run: |
+          INFO=$(
+            asc builds list \
+            --app "${{ vars.APPLE_APP_ID }}" \
+            --platform IOS \
+            --build-number "${{ inputs.build_number }}" \
+            --sort -uploadedDate \
+            --limit 1 \
+            --output json
+          )
+          
+          ID=$(echo "$INFO" | jq -r '.data[0].id')
+          echo "id=$ID" >> $GITHUB_OUTPUT
+
+      - name: Get Previous Version
+        id: previous_version
+        run: |
+          INFO=$(
+            asc versions list \
+            --app "${{ vars.APPLE_APP_ID }}" \
+            --platform IOS \
+            --state READY_FOR_SALE \
+            --limit 1 \
+            --output json
+          )
+          
+          VERSION=$(echo "$INFO" | jq -r '.data[0].attributes.versionString')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get Previous Metadata
+        id: get_metadata
+        run: |
+          DIR="./metadata"
+          
+          # Pull metadata from the previous version
+          asc metadata pull \
+            --app "${{ vars.APPLE_APP_ID }}" \
+            --platform IOS \
+            --version "${{ steps.previous_version.outputs.version }}" \
+            --dir "$DIR"
+
+          echo "dir=$DIR" >> $GITHUB_OUTPUT
+
+      - name: Set New Metadata
+        run: |
+          DIR="${{ steps.get_metadata.outputs.dir }}"
+          PREVIOUS_VERSION="${{ steps.previous_version.outputs.version }}"
+          NEW_VERSION="${{ inputs.tag }}"
+
+          # Create directory for the NEW version
+          mkdir -p "$DIR/version/$NEW_VERSION"
+
+          # Copy all JSON files from previous version to new version
+          cp "$DIR/version/$PREVIOUS_VERSION"/*.json "$DIR/version/$NEW_VERSION/"
+
+          FILE="$DIR/version/$NEW_VERSION/en-US.json"
+
+          # Update whatsNew using temp file pattern
+          jq --arg new_whats_new "${{ inputs.release_notes }}" \
+            '.whatsNew = $new_whats_new' \
+            "$FILE" > "$FILE.tmp" && mv "$FILE.tmp" "$FILE"
+
+      - name: Stage Release
+        run: |
+          asc release stage \
+            --app "${{ vars.APPLE_APP_ID }}" \
+            --platform IOS \
+            --version "${{ inputs.tag }}" \
+            --build "${{ steps.get_build.outputs.id }}" \
+            --metadata-dir "${{ steps.get_metadata.outputs.dir }}" \
+            --confirm
+
+      - name: Submit for Review
+        run: |
+          asc review submit \
+            --app "${{ vars.APPLE_APP_ID }}" \
+            --platform IOS \
+            --version "${{ inputs.tag }}" \
+            --build "${{ steps.get_build.outputs.id }}" \
+            --confirm
+          
+      - name: Clean Up
+        if: always()
+        run: |
+          rm -rf "${{ steps.get_metadata.outputs.dir }}"

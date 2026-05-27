@@ -1,40 +1,25 @@
 {
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "chrome (canvas)",
+      "name": "app",
       "request": "launch",
-      "type": "dart",
-      "args": [
-        "-d",
-        "chrome",
-        "--web-renderer",
-        "canvaskit",
-        "--web-port=8081"
-      ]
+      "type": "dart"
     },
     {
-      "name": "chrome (html)",
+      "name": "app (profile mode)",
       "request": "launch",
       "type": "dart",
-      "args": [
-        "-d",
-        "chrome",
-        "--web-renderer",
-        "html",
-        "--web-port=8081"
-      ]
+      "flutterMode": "profile"
     },
     {
-      "name": "web-server",
+      "name": "app (release mode)",
       "request": "launch",
       "type": "dart",
-      "args": [
-        "-d",
-        "web-server",
-        "--web-port=8081",
-        "--web-hostname=0.0.0.0"
-      ],
-    },
+      "flutterMode": "release"
+    }
   ]
 }

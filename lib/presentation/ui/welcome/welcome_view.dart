@@ -15,11 +15,15 @@ class WelcomeView extends StatelessWidget {
           if (state.status == WelcomeStatus.failure) {
             context.showSnackBar(Text(state.errorMessage));
           } else if (state.status == WelcomeStatus.complete) {
-            context.pushAndRemove(const AppView());
+            context.closeSnackBar();
+            // this is now handled by the MaterialApp/AppBloc
+            // context.safePushAndRemove(const LoginView());
           }
         },
         child: CustomScaffold(
           semanticLabel: context.l10n.welcomeView,
+          left: false,
+          right: false,
           body: const WelcomeBody(),
         ),
       ),

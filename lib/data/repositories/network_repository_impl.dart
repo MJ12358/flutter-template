@@ -1,51 +1,34 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dart_extensionz/dart_extensionz.dart';
 import 'package:flutter_template/domain/datasources/network_datasource.dart';
-import 'package:flutter_template/domain/exceptions/platform_exception.dart';
-import 'package:flutter_template/domain/repositories/analytics_repository.dart';
+import 'package:flutter_template/domain/exceptions/unimplemented_exception.dart';
 import 'package:flutter_template/domain/repositories/network_repository.dart';
 
 class NetworkRepositoryImpl implements NetworkRepository {
   const NetworkRepositoryImpl({
-    required AnalyticsRepository analyticsRepository,
-    required NetworkDataSource androidDataSource,
-    required NetworkDataSource iosDataSource,
-    required NetworkDataSource linuxDataSource,
-    required NetworkDataSource windowsDataSource,
-  })  : _analyticsRepository = analyticsRepository,
-        _androidDataSource = androidDataSource,
-        _iosDataSource = iosDataSource,
-        _linuxDataSource = linuxDataSource,
-        _windowsDataSource = windowsDataSource;
+    required this._androidDataSource,
+    required this._iosDataSource,
+  });
 
-  final AnalyticsRepository _analyticsRepository;
   final NetworkDataSource _androidDataSource;
   final NetworkDataSource _iosDataSource;
-  final NetworkDataSource _linuxDataSource;
-  final NetworkDataSource _windowsDataSource;
+
+  static const List<ConnectivityResult> _expectedResults = <ConnectivityResult>[
+    ConnectivityResult.ethernet,
+    ConnectivityResult.mobile,
+    ConnectivityResult.vpn,
+    ConnectivityResult.wifi,
+  ];
 
   @override
   Future<bool> get isConnected {
-    try {
-      switch (PlatformExtension.target) {
-        case TargetPlatform.android:
-          return _isConnected(_androidDataSource);
-        case TargetPlatform.iOS:
-        case TargetPlatform.macOS:
-          return _isConnected(_iosDataSource);
-        case TargetPlatform.linux:
-          return _isConnected(_linuxDataSource);
-        case TargetPlatform.windows:
-          return _isConnected(_windowsDataSource);
-        default:
-          throw PlatformException.notSupported();
-      }
-    } catch (e, s) {
-      _analyticsRepository.logException(
-        details: e,
-        stackTrace: s,
-      );
-      rethrow;
+    switch (PlatformExtension.target) {
+      case TargetPlatform.android:
+        return _isConnected(_androidDataSource);
+      case TargetPlatform.iOS:
+        return _isConnected(_iosDataSource);
+      default:
+        throw UnimplementedException.platform();
     }
   }
 
@@ -62,17 +45,12 @@ class NetworkRepositoryImpl implements NetworkRepository {
   }
 
   Future<bool> _hasConnectivity() async {
-    final ConnectivityResult result = await Connectivity().checkConnectivity();
-    switch (result) {
-      case ConnectivityResult.ethernet:
-      case ConnectivityResult.mobile:
-      case ConnectivityResult.vpn:
-      case ConnectivityResult.wifi:
-        return true;
-      case ConnectivityResult.bluetooth:
-      case ConnectivityResult.other:
-      case ConnectivityResult.none:
-        return false;
+    final List<ConnectivityResult> results = await Connectivity()
+        .checkConnectivity();
+    if (_expectedResults.any(results.contains)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

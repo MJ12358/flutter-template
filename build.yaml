@@ -1,0 +1,60 @@
+targets:
+  $default:
+    builders:
+      envied_generator:envied:
+        generate_for:
+          include:
+            - "lib/core/**"
+      # envied configuration
+      source_gen:combining_builder:
+        generate_for:
+          include:
+            - "lib/core/**"
+        options:
+          build_extensions:
+            "lib/{{path}}/{{file}}.dart": ["lib/{{path}}/{{file}}.g.dart"]
+      # dart mappable configuration
+      dart_mappable_builder:
+        generate_for:
+          include:
+            - "lib/domain/entities/**"
+            - "lib/domain/enums/**"
+            - "lib/presentation/form_inputs/**"
+            - "lib/presentation/ui/**"
+        options:
+          # the case style for the map keys, defaults to 'none'
+          # 'snakeCase' is used to match datasource naming conventions for keys
+          caseStyle: snakeCase # or 'camelCase', 'snakeCase', etc.
+          # the case style for stringified enum values, defaults to 'none'
+          # 'camelCase' is used to match datasource naming conventions for enums
+          enumCaseStyle: snakeCase # or 'camelCase', 'snakeCase', etc.
+          # if true removes all map keys with null values
+          ignoreNull: false # or true
+          # used as property name for type discriminators
+          discriminatorKey: type
+          # used to specify which methods to generate (all by default)
+          generateMethods: [decode, encode, copy, equals]
+          build_extensions:
+            "lib/{{path}}/{{file}}.dart": ["lib/{{path}}/{{file}}.g.dart"]
+      # # injectable configuration
+      # injectable_generator:injectable_builder:
+      #   generate_for:
+      #     include:
+      #       - "lib/bootstrap.dart"
+      #       - "lib/data/datasources/**"
+      #       - "lib/data/repositories/**"
+      #       - "lib/presentation/ui/**"
+      #   options:
+      #     build_extensions:
+      #       "lib/{{path}}/{{file}}.dart": ["lib/{{path}}/{{file}}.g.dart"]
+      # # injectable configuration
+      # injectable_generator:injectable_config_builder:
+      #   generate_for:
+      #     include:
+      #       - "lib/injector.dart"
+      #   options:
+      #     asExtension: false
+      #     initializerName: configureDependencies
+      #     preferRelativeImports: false
+      #     build_extensions:
+      #       "lib/{{file}}.dart": ["lib/{{file}}.g.dart"]

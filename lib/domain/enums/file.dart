@@ -6,4 +6,5 @@ enum FileSource {
 enum FileLocation {
   application,
   downloads,
+  media,
 }

@@ -1,43 +1,27 @@
 part of '../settings.dart';
 
+@MappableEnum()
 enum SettingsStatus {
   loading,
   initial,
   success,
   failure,
-  exportInProgress,
-  exportSuccess,
-  importInProgress,
-  importSuccess,
 }
 
-final class SettingsState extends Equatable {
+@MappableClass()
+final class SettingsState with SettingsStateMappable {
   const SettingsState({
     this.settings = const Settings(),
+    this.sharedPrefs = const SharedPrefs(),
     this.status = SettingsStatus.loading,
     this.errorMessage = '',
   });
 
   final Settings settings;
+  final SharedPrefs sharedPrefs;
   final SettingsStatus status;
   final String errorMessage;
 
-  @override
-  List<Object> get props => <Object>[
-        settings,
-        status,
-        errorMessage,
-      ];
-
-  SettingsState copyWith({
-    Settings? settings,
-    SettingsStatus? status,
-    String? errorMessage,
-  }) {
-    return SettingsState(
-      settings: settings ?? this.settings,
-      status: status ?? this.status,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+  SettingsState Function(Map<String, dynamic> map) get fromMap =>
+      SettingsStateMapper.fromMap;
 }

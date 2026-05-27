@@ -1,5 +1,5 @@
 import 'package:flutter_template/domain/entities/about.dart';
 
-abstract class AboutRepository {
+abstract interface class AboutRepository {
   Future<About> get();
 }

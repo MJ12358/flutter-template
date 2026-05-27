@@ -1,40 +1,25 @@
 part of '../welcome.dart';
 
+@MappableEnum()
 enum WelcomeStatus {
   initial,
   loading,
-  success,
   failure,
   complete,
 }
 
-final class WelcomeState extends Equatable {
+@MappableClass()
+final class WelcomeState with WelcomeStateMappable {
   const WelcomeState({
-    this.settings = const Settings(),
+    this.sharedPrefs = const SharedPrefs(),
     this.status = WelcomeStatus.loading,
     this.errorMessage = '',
   });
 
-  final Settings settings;
+  final SharedPrefs sharedPrefs;
   final WelcomeStatus status;
   final String errorMessage;
 
-  @override
-  List<Object> get props => <Object>[
-        settings,
-        status,
-        errorMessage,
-      ];
-
-  WelcomeState copyWith({
-    Settings? settings,
-    WelcomeStatus? status,
-    String? errorMessage,
-  }) {
-    return WelcomeState(
-      settings: settings ?? this.settings,
-      status: status ?? this.status,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+  WelcomeState Function(Map<String, dynamic> map) get fromMap =>
+      WelcomeStateMapper.fromMap;
 }

@@ -7,6 +7,8 @@
   "analytics": "Analytics",
   "areYouSureImport": "Are you sure you want to import?\nDoing so will overwrite your existing data.",
   "common": "Common",
+  "confirmExit": "Confirm Exit",
+  "confirmExitMessage": "Are you sure you want to exit the app?",
   "darkMode": "Dark Mode",
   "developer": "Developer",
   "export": "Export",

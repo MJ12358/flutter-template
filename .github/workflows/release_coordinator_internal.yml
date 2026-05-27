@@ -1,0 +1,80 @@
+name: Release Coordinator (Internal)
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - CHANGELOG.md
+  workflow_dispatch:
+
+jobs:
+  summarize:
+    uses: ./.github/workflows/summarize.yml
+    with:
+      branch: ${{ github.ref_name }}
+
+  android:
+    needs: summarize
+    uses: ./.github/workflows/android_release_internal.yml
+    secrets: inherit
+    with:
+      flutter_version: ${{ needs.summarize.outputs.flutter_version }}
+      release_notes: ${{ needs.summarize.outputs.release_notes }}
+      tag: ${{ needs.summarize.outputs.tag }}
+      version: ${{ needs.summarize.outputs.version }}
+
+  ios:
+    needs: summarize
+    uses: ./.github/workflows/ios_release_internal.yml
+    secrets: inherit
+    with:
+      flutter_version: ${{ needs.summarize.outputs.flutter_version }}
+      release_notes: ${{ needs.summarize.outputs.release_notes }}
+      tag: ${{ needs.summarize.outputs.tag }}
+
+  release:
+    if: always()
+    needs:
+      - android
+      - ios
+      - summarize
+    runs-on: ubuntu-latest
+
+    concurrency:
+      # this needs to be the same group as the production release coordinator
+      group: release-${{ needs.summarize.outputs.tag }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Download Android Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-${{ needs.summarize.outputs.tag }}
+          path: artifacts/android
+
+      - name: Download iOS Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-${{ needs.summarize.outputs.tag }}
+          path: artifacts/ios
+
+      - name: Create Release
+        # this will create a release when android OR ios succeed
+        if: needs.android.result == 'success' || needs.ios.result == 'success'
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: |
+            artifacts/android/*.aab
+            artifacts/ios/*.ipa
+          tag: v${{ needs.summarize.outputs.tag }}
+          name: v${{ needs.summarize.outputs.version }}
+          token: ${{ secrets.PAT }}
+          body: ${{ needs.summarize.outputs.release_notes }}
+          allowUpdates: true # allow updates to the release
+          prerelease: true # mark as prerelease
+          replacesArtifacts: true # replace artifacts
+          removeArtifacts: true # remove old artifacts

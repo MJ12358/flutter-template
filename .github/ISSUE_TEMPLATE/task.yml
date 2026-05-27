@@ -1,0 +1,63 @@
+name: "📋 Task"
+description: "Create a task for development, documentation or maintenance work"
+type: Task
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for creating this task! Please provide clear requirements and acceptance criteria.
+
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: "Task Type"
+      description: "What type of task is this?"
+      options:
+        - "Development"
+        - "Documentation"
+        - "Refactoring"
+        - "Testing"
+        - "Design"
+        - "Infrastructure"
+        - "Research"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: task-description
+    attributes:
+      label: "Task Description"
+      description: "What needs to be done? Be specific about the scope of work."
+      placeholder: "We need to implement..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: "Motivation"
+      description: "Why is this task necessary? What value does it provide?"
+      placeholder: "This is needed because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: "Technical Notes"
+      description: "Any technical implementation details, constraints, or considerations"
+      placeholder: "Note that we need to consider..."
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I have searched for existing tasks and this is not a duplicate"
+          required: true
+        - label: "I have clearly defined the scope and acceptance criteria"
+          required: true
+        - label: "I have identified any dependencies or blockers"
+          required: false

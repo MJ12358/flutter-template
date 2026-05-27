@@ -1,9 +1,4 @@
-# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/actions/stale
-name: Mark Stale Issues
+name: Mark stale issues
 
 on:
   schedule:
@@ -18,9 +13,9 @@ jobs:
     steps:
       - uses: actions/stale@v5
         with:
-          days-before-stale: 7
-          days-before-close: 7
-          stale-issue-message: "This issue is stale because it has been open for 7 days with no activity."
-          close-issue-message: "This issue was closed because it has been inactive for 7 days since being marked as stale."
+          days-before-stale: ${{ vars.DAYS_BEFORE_STALE }}
+          days-before-close: ${{ vars.DAYS_BEFORE_CLOSE }}
+          stale-issue-message: "This issue is stale because it has been open for ${{ vars.DAYS_BEFORE_STALE }} days with no activity."
+          close-issue-message: "This issue was closed because it has been inactive for ${{ vars.DAYS_BEFORE_CLOSE }} days since being marked as stale."
           stale-issue-label: "Stale"
           repo-token: ${{ secrets.GITHUB_TOKEN }}

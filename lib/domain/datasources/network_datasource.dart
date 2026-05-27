@@ -1,3 +1,3 @@
-abstract class NetworkDataSource {
+abstract interface class NetworkDataSource {
   Future<bool> hasInternet();
 }

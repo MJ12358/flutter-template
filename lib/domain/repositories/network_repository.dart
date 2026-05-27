@@ -1,3 +1,3 @@
-abstract class NetworkRepository {
+abstract interface class NetworkRepository {
   Future<bool> get isConnected;
 }

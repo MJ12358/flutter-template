@@ -1,25 +1,25 @@
-import 'dart:convert' as convert;
+import 'dart:convert';
 import 'dart:math' as math;
+import 'dart:typed_data';
 
-import 'package:crypto/crypto.dart' as crypto;
+import 'package:crypto/crypto.dart';
 
-class Crypto {
-  Crypto._();
+abstract final class Crypto {
+  static String generateNonce([int length = 32]) {
+    const String charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
 
-  static const String charset =
-      '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-
-  static String nonce([int length = 32]) {
     final math.Random random = math.Random.secure();
+
     return List<String>.generate(
       length,
       (_) => charset[random.nextInt(charset.length)],
     ).join();
   }
 
-  static String sha256(String input) {
-    final List<int> bytes = convert.utf8.encode(input);
-    final crypto.Digest digest = crypto.sha256.convert(bytes);
+  static String sha256ofString(String input) {
+    final Uint8List bytes = utf8.encode(input);
+    final Digest digest = sha256.convert(bytes);
     return digest.toString();
   }
 }

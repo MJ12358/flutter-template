@@ -1,21 +1,19 @@
+import 'package:flutter_template/data/datasources/sembast/sembast_database.dart';
 import 'package:flutter_template/data/models/sembast/sembast_settings_model.dart';
-import 'package:flutter_template/domain/core/database.dart' as domain;
 import 'package:flutter_template/domain/datasources/settings_datasource.dart';
 import 'package:flutter_template/domain/entities/settings.dart';
 import 'package:sembast/sembast.dart';
 
 class SembastSettingsDataSource implements SettingsDataSource {
   SembastSettingsDataSource({
-    required domain.Database database,
-  }) : _database = database;
+    required SembastDatabase database,
+  }) : _db = database.db;
 
-  final domain.Database _database;
-  Database get _db => _database.db as Database;
+  final Database _db;
 
-  static const String _storeName = 'settings';
-
-  static final StoreRef<int, Map<String, Object?>> _store =
-      intMapStoreFactory.store(_storeName);
+  static const String storeName = 'settings';
+  static StoreRef<int, Map<String, Object?>> get _store =>
+      intMapStoreFactory.store(storeName);
 
   @override
   Stream<Settings> get() {
@@ -29,8 +27,9 @@ class SembastSettingsDataSource implements SettingsDataSource {
   Future<void> set({
     required Settings settings,
   }) async {
-    final Map<String, Object?> data =
-        SembastSettingsModel.fromEntity(settings).toMap();
+    final Map<String, Object?> data = SembastSettingsModel.fromEntity(
+      settings,
+    ).toMap();
     await _store.record(0).put(_db, data);
   }
 }

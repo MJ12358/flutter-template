@@ -1,0 +1,66 @@
+name: Summarize
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        description: "The branch name that triggered the workflow."
+        required: true
+        type: string
+    outputs:
+      flutter_version:
+        description: "The version of Flutter used in the project."
+        value: ${{ jobs.summarize.outputs.flutter_version }}
+      release_notes:
+        description: "The release notes for the new version."
+        value: ${{ jobs.summarize.outputs.release_notes }}
+      tag:
+        description: "The tag, derived from the version. This is the version string without the build number."
+        value: ${{ jobs.summarize.outputs.tag }}
+      version:
+        description: "The version. This is the full version string including the build number."
+        value: ${{ jobs.summarize.outputs.version }}
+      build_number:
+        description: "The build number extracted from the version."
+        value: ${{ jobs.summarize.outputs.build_number }}
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    outputs:
+      flutter_version: ${{ steps.pubspec.outputs['environment.flutter'] }}
+      release_notes: ${{ steps.release_notes.outputs.body }}
+      tag: ${{ steps.get_tag.outputs.tag }}
+      version: ${{ steps.pubspec.outputs['version'] }}
+      build_number: ${{ steps.get_build_number.outputs.number }}
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Read pubspec.yaml
+        id: pubspec
+        uses: nichmor/minimal-read-yaml@v0.0.2
+        with:
+          config: "./pubspec.yaml"
+
+      - name: Get Release Notes
+        id: release_notes
+        uses: kiyoon/parse-changelog-action@v1
+        with:
+          changelog-file-path: CHANGELOG.md
+          version: ${{ steps.pubspec.outputs['version'] }}
+
+      - name: Get Tag
+        id: get_tag
+        run: |
+          VERSION="${{ steps.pubspec.outputs['version'] }}"
+          TAG="${VERSION%%+*}"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Get Build Number
+        id: get_build_number
+        run: |
+          VERSION="${{ steps.pubspec.outputs['version'] }}"
+          NUMBER="${VERSION##*+}"
+          echo "number=$NUMBER" >> $GITHUB_OUTPUT

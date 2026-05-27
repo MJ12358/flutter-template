@@ -17,8 +17,6 @@ class SettingsBody extends StatelessWidget {
         return const SettingsList(
           sections: <Widget>[
             SettingsCommonSection(),
-            SettingsMiscSection(),
-            SettingsDeveloperSection(),
             SettingsLegalSection(),
           ],
         );

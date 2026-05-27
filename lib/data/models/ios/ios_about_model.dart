@@ -4,7 +4,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class IOSAboutModel extends About {
   const IOSAboutModel({
-    super.appCode,
     super.appId,
     super.appName,
     super.appVersion,
@@ -12,7 +11,6 @@ class IOSAboutModel extends About {
     super.deviceHardware,
     super.deviceMake,
     super.deviceModel,
-    super.deviceVerison,
   });
 
   factory IOSAboutModel.fromInfo({
@@ -20,7 +18,6 @@ class IOSAboutModel extends About {
     required PackageInfo packageInfo,
   }) {
     return IOSAboutModel(
-      appCode: packageInfo.buildNumber,
       appId: packageInfo.packageName,
       appName: packageInfo.appName,
       appVersion: packageInfo.version,
@@ -28,7 +25,6 @@ class IOSAboutModel extends About {
       deviceHardware: deviceInfo.utsname.machine,
       deviceMake: 'Apple',
       deviceModel: deviceInfo.model,
-      deviceVerison: deviceInfo.systemVersion,
     );
   }
 }

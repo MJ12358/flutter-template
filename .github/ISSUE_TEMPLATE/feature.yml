@@ -1,0 +1,51 @@
+name: "🚀 Feature"
+description: "Suggest an idea for the mobile app"
+type: Feature
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please provide as much detail as possible.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem Statement"
+      description: "What problem are you trying to solve? Why is this needed?"
+      placeholder: "I'm always frustrated when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Proposed Solution"
+      description: "How should this feature work?"
+      placeholder: "I suggest implementing..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives Considered"
+      description: "Are there any alternative solutions or features you've considered?"
+      placeholder: "I've considered..."
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: "Mockups/Screenshots"
+      description: "If you have any mockups, wireframes, or screenshots, please attach them"
+      placeholder: "Drag and drop images here"
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: "Checklist"
+      options:
+        - label: "I have searched the existing issues and this is not a duplicate"
+          required: true
+        - label: "This feature would benefit the majority of users"
+          required: false

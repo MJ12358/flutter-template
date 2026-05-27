@@ -1,1 +1,10 @@
 include: package:dart_lintz/dart_lintz.yaml
+
+analyzer:
+  exclude: [
+      # Exclude the generated files
+      "build/**",
+      "lib/**.g.dart",
+      "lib/**.freezed.dart",
+      "lib/**.mapper.dart",
+    ]

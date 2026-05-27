@@ -1,0 +1,56 @@
+name: Release Coordinator (Production)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - CHANGELOG.md
+  workflow_dispatch:
+
+jobs:
+  summarize:
+    uses: ./.github/workflows/summarize.yml
+    with:
+      branch: ${{ github.ref_name }}
+
+  android:
+    needs: summarize
+    uses: ./.github/workflows/android_release_production.yml
+    secrets: inherit
+
+  ios:
+    needs: summarize
+    uses: ./.github/workflows/ios_release_production.yml
+    secrets: inherit
+    with:
+      release_notes: ${{ needs.summarize.outputs.release_notes }}
+      tag: ${{ needs.summarize.outputs.tag }}
+      build_number: ${{ needs.summarize.outputs.build_number }}
+
+  release:
+    if: always()
+    needs:
+      - android
+      - ios
+      - summarize
+    runs-on: ubuntu-latest
+
+    concurrency:
+      # this needs to be the same group as the internal release coordinator
+      group: release-${{ needs.summarize.outputs.tag }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Finalize Release
+        # this will finalize a release when android OR ios succeed
+        if: needs.android.result == 'success' || needs.ios.result == 'success'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ needs.summarize.outputs.tag }}
+          name: v${{ needs.summarize.outputs.version }}
+          token: ${{ secrets.PAT }}
+          body: ${{ needs.summarize.outputs.release_notes }}
+          allowUpdates: true # allow updates to the release
+          prerelease: false # create a production release
+          replacesArtifacts: false # use artifacts from the original release

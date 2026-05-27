@@ -1,42 +1,28 @@
 part of '../app.dart';
 
+@MappableEnum()
 enum AppStatus {
   initializing,
-  initial,
+  needsWelcome,
   success,
   failure,
-  authenticated,
-  unauthenticated,
-  needsWelcome,
+  reset,
 }
 
-final class AppState extends Equatable {
+@MappableClass()
+final class AppState with AppStateMappable {
   const AppState({
     this.settings = const Settings(),
+    this.sharedPrefs = const SharedPrefs(),
     this.status = AppStatus.initializing,
     this.errorMessage = '',
   });
 
   final Settings settings;
+  final SharedPrefs sharedPrefs;
   final AppStatus status;
   final String errorMessage;
 
-  @override
-  List<Object> get props => <Object>[
-        settings,
-        status,
-        errorMessage,
-      ];
-
-  AppState copyWith({
-    Settings? settings,
-    AppStatus? status,
-    String? errorMessage,
-  }) {
-    return AppState(
-      settings: settings ?? this.settings,
-      status: status ?? this.status,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+  AppState Function(Map<String, dynamic> map) get fromMap =>
+      AppStateMapper.fromMap;
 }

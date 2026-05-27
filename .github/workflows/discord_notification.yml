@@ -1,0 +1,56 @@
+name: Discord Notification
+
+on:
+  release:
+    types:
+      - prereleased
+      - released
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Send Notification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Release Type
+        id: release_type
+        run: |
+          # Map event actions to friendly names
+          case "${{ github.event.action }}" in
+            "published"|"released")
+              echo "type=RELEASE PUBLISHED" >> $GITHUB_OUTPUT
+              echo "emoji=🚀" >> $GITHUB_OUTPUT
+              ;;
+            "created")
+              echo "type=RELEASE CREATED" >> $GITHUB_OUTPUT
+              echo "emoji=📝" >> $GITHUB_OUTPUT
+              ;;
+            "edited")
+              echo "type=RELEASE EDITED" >> $GITHUB_OUTPUT
+              echo "emoji=✏️" >> $GITHUB_OUTPUT
+              ;;
+            "prereleased")
+              echo "type=PRE-RELEASE" >> $GITHUB_OUTPUT
+              echo "emoji=🧪" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "type=RELEASE EVENT" >> $GITHUB_OUTPUT
+              echo "emoji=📦" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Discord Notification
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: |
+            ${{ steps.release_type.outputs.emoji }} **${{ steps.release_type.outputs.type }}**
+
+            🏷️ **Version:** `${{ github.event.release.name }}`
+            📋 **Notes:**
+            ${{ github.event.release.body }}
+
+            🔗 **View on GitHub:** ${{ github.event.release.html_url }}
+          username: "GitHub Bot"
+          avatar-url: "https://avatars.githubusercontent.com/u/9919?s=200&v=4"

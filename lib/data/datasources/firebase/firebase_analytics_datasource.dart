@@ -21,10 +21,30 @@ class FirebaseAnalyticsDataSource implements AnalyticsDataSource {
   FirebaseCrashlytics get _crashlytics => FirebaseCrashlytics.instance;
 
   @override
-  Future<void> logException({
-    Object? details,
-    StackTrace? stackTrace,
+  Future<void> error({
+    Object? message,
+    StackTrace? trace,
   }) {
-    return _crashlytics.recordError(details, stackTrace);
+    return _crashlytics.recordError(
+      message,
+      trace,
+    );
+  }
+
+  @override
+  Future<void> fatal({
+    Object? message,
+    StackTrace? trace,
+  }) {
+    return _crashlytics.recordError(
+      message,
+      trace,
+      fatal: true,
+    );
+  }
+
+  @override
+  void forceCrash() {
+    _crashlytics.crash();
   }
 }
