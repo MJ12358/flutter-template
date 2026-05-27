@@ -1,6 +1,6 @@
 # Flutter Template
 
-A Flutter skeleton using Clean Architecture, the Bloc state management solution and Sembast.
+A Flutter skeleton using Clean Architecture, the Bloc state management solution and Sembast for local storage.
 
 ## Installation
 
@@ -126,10 +126,3 @@ First you must build the app, then the signing report will become available.
 cd android
 gradlew signingReport
 ```
-
-## Widgets (optional)
-
-There are some widgets shipped with this template that you may want to rename.
-
-- `FlutterTemplateBottomNavigation`
-- `FlutterTemplateSideNavigation`
