@@ -1,9 +1,8 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
-    // id "com.google.gms.google-services"
-    id "com.google.firebase.crashlytics"
+    id("com.android.application")
+    id("dev.flutter.flutter-gradle-plugin")
+    // id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 def localProperties = new Properties()
@@ -42,8 +41,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
     }
 
     sourceSets {
@@ -52,7 +53,7 @@ android {
 
     defaultConfig {
         applicationId "com.company.flutter_template"
-        minSdk 24
+        minSdk flutter.minSdkVersion
         targetSdk flutter.targetSdkVersion
         versionCode flutter.versionCode
         versionName flutter.versionName
