@@ -37,7 +37,7 @@ class SembastDatabase implements LocalDatabase<Database> {
     int newVersion,
   ) async {
     if (oldVersion == 0) {
-      // new database load defaults
+      // https://github.com/tekartik/sembast.dart/blob/master/sembast/doc/open.md#preloading-data
     }
   }
 }
