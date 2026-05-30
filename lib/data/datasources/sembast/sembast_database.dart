@@ -9,7 +9,7 @@ class SembastDatabase implements LocalDatabase<Database> {
   static const String _databaseName = 'sembast.db';
   static const int _databaseVersion = 1;
 
-  late Database? _db;
+  late Database _db;
 
   Future<String> get _databasePath async {
     final Directory dir = await getApplicationSupportDirectory();
@@ -29,7 +29,7 @@ class SembastDatabase implements LocalDatabase<Database> {
   }
 
   @override
-  Database get db => _db!;
+  Database get db => _db;
 
   Future<void> _onVersionChanged(
     Database db,
