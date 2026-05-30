@@ -30,24 +30,24 @@ abstract final class Injector {
     await sl.allReady();
   }
 
-  static Future<void> _initCore() async {
-    CoreModule().register(sl);
+  static Future<void> _initCore() {
+    return CoreModule().register(sl);
   }
 
-  static Future<void> _initDatabase() async {
-    await DatabaseModule().register(sl);
+  static Future<void> _initDatabase() {
+    return DatabaseModule().register(sl);
   }
 
-  static Future<void> _initDataSources() async {
-    DataSourceModule().register(sl);
+  static Future<void> _initDataSources() {
+    return DataSourceModule().register(sl);
   }
 
-  static Future<void> _initRepositories() async {
-    RepositoryModule().register(sl);
+  static Future<void> _initRepositories() {
+    return RepositoryModule().register(sl);
   }
 
-  static Future<void> _initPresentation() async {
-    PresentationModule().register(sl);
+  static Future<void> _initPresentation() {
+    return PresentationModule().register(sl);
   }
 
   static Future<void> reset() async {

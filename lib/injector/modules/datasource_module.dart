@@ -20,7 +20,7 @@ import 'package:get_it/get_it.dart';
 ///
 /// Datasources retrieve data.
 class DataSourceModule with InjectorMixin {
-  void register(GetIt sl) {
+  Future<void> register(GetIt sl) async {
     // android
 
     sl.registerLazySingleton<AboutDataSource>(

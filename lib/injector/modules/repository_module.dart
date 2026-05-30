@@ -21,7 +21,7 @@ import 'package:get_it/get_it.dart';
 ///
 /// Repositories are to handle datasources.
 class RepositoryModule with InjectorMixin {
-  void register(GetIt sl) {
+  Future<void> register(GetIt sl) async {
     sl.registerLazySingleton<AboutRepository>(
       () => AboutRepositoryImpl(
         logRepository: sl(),

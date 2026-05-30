@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 /// The `AppBloc` should be a singleton.
 /// All other blocs should be factories.
 class PresentationModule with InjectorMixin {
-  void register(GetIt sl) {
+  Future<void> register(GetIt sl) async {
     sl.registerLazySingleton<AppBloc>(
       () => AppBloc(
         settingsRepository: sl(),

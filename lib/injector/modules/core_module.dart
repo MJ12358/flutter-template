@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 ///
 /// Used to bootstrap the application.
 class CoreModule with InjectorMixin {
-  void register(GetIt sl) {
+  Future<void> register(GetIt sl) async {
     sl.registerLazySingleton<Bootstrap>(
       () => Bootstrap(
         logRepository: sl(),
