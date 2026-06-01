@@ -3,7 +3,7 @@ import 'package:flutter_template/core/constants.dart';
 import 'package:flutter_template/domain/core/remote_database.dart';
 
 class FirebaseDatabase implements RemoteDatabase<Object> {
-  FirebaseCrashlytics get _crashlytics => FirebaseCrashlytics.instance;
+  static final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
 
   @override
   Future<FirebaseDatabase> init() async {
