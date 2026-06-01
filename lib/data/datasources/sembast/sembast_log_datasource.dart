@@ -13,8 +13,8 @@ class SembastLogDataSource implements LogDataSource {
   final Database _db;
 
   static const String storeName = 'log';
-  static StoreRef<int, Map<String, Object?>> get _store =>
-      intMapStoreFactory.store(storeName);
+  static final StoreRef<int, Map<String, Object?>> _store = intMapStoreFactory
+      .store(storeName);
 
   @override
   Stream<List<SembastLogModel>> get({

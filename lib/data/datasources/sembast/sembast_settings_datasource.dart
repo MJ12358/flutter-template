@@ -12,8 +12,8 @@ class SembastSettingsDataSource implements SettingsDataSource {
   final Database _db;
 
   static const String storeName = 'settings';
-  static StoreRef<int, Map<String, Object?>> get _store =>
-      intMapStoreFactory.store(storeName);
+  static final StoreRef<int, Map<String, Object?>> _store = intMapStoreFactory
+      .store(storeName);
 
   @override
   Stream<Settings> get() {
