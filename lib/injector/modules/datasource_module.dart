@@ -59,14 +59,14 @@ class DataSourceModule with InjectorMixin {
 
     sl.registerLazySingleton<LogDataSource>(
       () => SembastLogDataSource(
-        database: sl(),
+        database: sl(instanceName: local),
       ),
       instanceName: local,
     );
 
     sl.registerLazySingleton<SettingsDataSource>(
       () => SembastSettingsDataSource(
-        database: sl(),
+        database: sl(instanceName: local),
       ),
       instanceName: local,
     );
