@@ -7,8 +7,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 class IOSAboutDataSource implements AboutDataSource {
   @override
   Future<About> get() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    final IosDeviceInfo deviceInfo = await DeviceInfoPlugin().iosInfo;
+    final (PackageInfo packageInfo, IosDeviceInfo deviceInfo) = await (
+      PackageInfo.fromPlatform(),
+      DeviceInfoPlugin().iosInfo,
+    ).wait;
 
     return IOSAboutModel.fromInfo(
       deviceInfo: deviceInfo,

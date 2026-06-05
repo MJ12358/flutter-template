@@ -7,8 +7,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 class AndroidAboutDataSource implements AboutDataSource {
   @override
   Future<About> get() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    final AndroidDeviceInfo deviceInfo = await DeviceInfoPlugin().androidInfo;
+    final (PackageInfo packageInfo, AndroidDeviceInfo deviceInfo) = await (
+      PackageInfo.fromPlatform(),
+      DeviceInfoPlugin().androidInfo,
+    ).wait;
 
     return AndroidAboutModel.fromInfo(
       deviceInfo: deviceInfo,
