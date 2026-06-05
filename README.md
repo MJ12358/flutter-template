@@ -74,7 +74,7 @@ flutter_launcher_icons:
 Then run:
 
 ```bash
-dart run flutter_launcher_icons:main
+flutter pub run flutter_launcher_icons
 ```
 
 ## Changing the Splash Screen
