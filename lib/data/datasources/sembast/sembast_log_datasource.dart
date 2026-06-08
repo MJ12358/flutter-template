@@ -7,10 +7,11 @@ import 'package:sembast/sembast.dart';
 
 class SembastLogDataSource implements LogDataSource {
   SembastLogDataSource({
-    required SembastDatabase database,
-  }) : _db = database.db;
+    required this._database,
+  });
 
-  final Database _db;
+  final SembastDatabase _database;
+  Database get _db => _database.db;
 
   static const String storeName = 'log';
   static final StoreRef<int, Map<String, Object?>> _store = intMapStoreFactory

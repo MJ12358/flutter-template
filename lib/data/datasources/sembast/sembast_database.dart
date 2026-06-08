@@ -11,6 +11,10 @@ class SembastDatabase implements LocalDatabase<Database> {
 
   late Database _db;
 
+  static DatabaseFactory get _databaseFactory {
+    return databaseFactoryIo;
+  }
+
   Future<String> get _databasePath async {
     final Directory dir = await getApplicationSupportDirectory();
     return join(dir.path, _databaseName);
@@ -19,13 +23,18 @@ class SembastDatabase implements LocalDatabase<Database> {
   @override
   Future<SembastDatabase> init() async {
     disableSembastCooperator();
-    _db = await databaseFactoryIo.openDatabase(
+    _db = await _databaseFactory.openDatabase(
       await _databasePath,
       version: _databaseVersion,
       onVersionChanged: _onVersionChanged,
     );
     enableSembastCooperator();
     return this;
+  }
+
+  @override
+  Future<void> close() async {
+    await _db.close();
   }
 
   @override

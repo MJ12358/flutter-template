@@ -2,5 +2,6 @@
 /// which is a common interface for all local databases in the application.
 abstract interface class LocalDatabase<T> {
   Future<LocalDatabase<T>> init();
+  Future<void> close();
   T get db;
 }

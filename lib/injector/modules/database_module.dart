@@ -11,11 +11,13 @@ class DatabaseModule with InjectorMixin {
     sl.registerSingletonAsync<SembastDatabase>(
       () => SembastDatabase().init(),
       instanceName: local,
+      dispose: (SembastDatabase db) => db.close(),
     );
 
     sl.registerSingletonAsync<FirebaseDatabase>(
       () => FirebaseDatabase().init(),
       instanceName: remote,
+      dispose: (FirebaseDatabase db) => db.close(),
     );
   }
 }

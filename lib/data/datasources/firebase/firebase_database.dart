@@ -22,4 +22,7 @@ class FirebaseDatabase implements RemoteDatabase<Object> {
   Object get db {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> close() async {}
 }

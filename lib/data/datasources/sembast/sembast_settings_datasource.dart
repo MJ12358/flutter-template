@@ -6,10 +6,11 @@ import 'package:sembast/sembast.dart';
 
 class SembastSettingsDataSource implements SettingsDataSource {
   SembastSettingsDataSource({
-    required SembastDatabase database,
-  }) : _db = database.db;
+    required this._database,
+  });
 
-  final Database _db;
+  final SembastDatabase _database;
+  Database get _db => _database.db;
 
   static const String storeName = 'settings';
   static final StoreRef<int, Map<String, Object?>> _store = intMapStoreFactory
