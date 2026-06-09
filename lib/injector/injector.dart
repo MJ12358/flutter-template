@@ -20,34 +20,14 @@ abstract final class Injector {
   static final GetIt sl = GetIt.instance;
 
   static Future<void> init() async {
-    await _initCore();
-    await _initDatabase();
-    await _initDataSources();
-    await _initRepositories();
-    await _initPresentation();
+    await CoreModule().register(sl);
+    await DatabaseModule().register(sl);
+    await DataSourceModule().register(sl);
+    await RepositoryModule().register(sl);
+    await PresentationModule().register(sl);
     // Wait for all async singletons to be ready
     // before allowing the app to start.
     await sl.allReady();
-  }
-
-  static Future<void> _initCore() {
-    return CoreModule().register(sl);
-  }
-
-  static Future<void> _initDatabase() {
-    return DatabaseModule().register(sl);
-  }
-
-  static Future<void> _initDataSources() {
-    return DataSourceModule().register(sl);
-  }
-
-  static Future<void> _initRepositories() {
-    return RepositoryModule().register(sl);
-  }
-
-  static Future<void> _initPresentation() {
-    return PresentationModule().register(sl);
   }
 
   static Future<void> reset() async {
