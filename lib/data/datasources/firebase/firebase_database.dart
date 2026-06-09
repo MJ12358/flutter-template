@@ -1,9 +1,8 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_template/core/constants.dart';
 import 'package:flutter_template/domain/core/remote_database.dart';
 
 class FirebaseDatabase implements RemoteDatabase<Object> {
-  static final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
+  // static final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
 
   @override
   Future<FirebaseDatabase> init() async {
@@ -12,7 +11,7 @@ class FirebaseDatabase implements RemoteDatabase<Object> {
     // );
 
     if (Build.isDebug) {
-      await _crashlytics.setCrashlyticsCollectionEnabled(false);
+      // await _crashlytics.setCrashlyticsCollectionEnabled(false);
     }
 
     return this;
