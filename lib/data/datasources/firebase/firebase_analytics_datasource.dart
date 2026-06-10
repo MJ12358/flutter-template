@@ -18,7 +18,7 @@ import 'package:flutter_template/domain/datasources/analytics_datasource.dart';
 ///
 /// value: 100
 class FirebaseAnalyticsDataSource implements AnalyticsDataSource {
-  static final FirebaseCrashlytics _crashlytics = FirebaseCrashlytics.instance;
+  static FirebaseCrashlytics get _crashlytics => FirebaseCrashlytics.instance;
 
   @override
   Future<void> error({
